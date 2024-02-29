@@ -13,6 +13,7 @@ class Window
 	//The surface contained by the window
 	SDL_Surface* screenSurface = NULL;
 
+
 public:
 	//The window we'll be rendering to
 	SDL_Window* window = NULL;
@@ -48,17 +49,42 @@ public:
 			}
 		}
 
-		//Destroy window
-		SDL_DestroyWindow(window);
-
-		//Quit SDL subsystems
-		SDL_Quit();
 
 	}
 
 	~Window()
 	{
 		
+	}
+
+	bool LoadMedia()
+	{
+		//Loading success flag
+		bool success = true;
+
+		//Load splash image
+		screenSurface = SDL_LoadBMP("Resources/cat.bmp");
+		if (screenSurface == NULL)
+		{
+			printf("Unable to load image %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError());
+			success = false;
+		}
+
+		return success;
+	}
+
+	void Close()
+	{
+		//Deallocate surface
+		SDL_FreeSurface(screenSurface);
+		screenSurface = NULL;
+
+		//Destroy window
+		SDL_DestroyWindow(window);
+		window = NULL;
+
+		//Quit SDL subsystems
+		SDL_Quit();
 	}
 
 };

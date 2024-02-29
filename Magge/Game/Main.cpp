@@ -6,9 +6,14 @@ and may not be redistributed without written permission.*/
 #include <stdio.h>
 #include "Window.h"
 
+
+
 int main( int argc, char* args[] )
 {
 	Window window{};
+
+	window.LoadMedia();
+	window.Close();
 
 	return 0;
 }
