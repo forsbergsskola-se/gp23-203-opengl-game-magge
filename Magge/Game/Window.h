@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <SDL_image.h>
 #include "String"
+#include "Texture.h"
 
 
 class Window
@@ -22,6 +23,8 @@ public:
 	SDL_Surface* screenSurface = NULL;
 	SDL_Window* window = NULL;
 
+	SDL_Renderer* renderer;
+
 	Window()
 	{
 		//Initialize SDL
@@ -39,11 +42,7 @@ public:
 			}
 			else
 			{
-				SDL_Texture* loadTexture(std::string path);
-				SDL_Renderer* renderer;
-				SDL_Texture* texture = NULL;
-
-
+				
 				renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 				if (renderer == NULL)
 				{
@@ -78,34 +77,38 @@ public:
 		
 	}
 
-	bool LoadMedia(SDL_Surface* image)
-	{
-		//Loading success flag
-		bool success = true;
 
-		//Load splash image
-		imageSurface = image;
-		if (imageSurface == NULL)
-		{
-			printf("Unable to load image %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError());
-			success = false;
-		}
 
-		return success;
-	}
+	//bool LoadMedia(std::string path)
+	//{
+	//	//Loading success flag
+	//	bool success = true;
 
-	void RenderImage(SDL_Surface* image)
-	{
-		if (LoadMedia(image))
-		{
-			//Apply the image
-			SDL_BlitSurface(imageSurface, NULL, screenSurface, NULL);
+	//	//Load splash image
+	//	Texture texture{ path, renderer};
+	//	if (texture.texture == NULL)
+	//	{
+	//		printf("Unable to load texture %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError());
+	//		success = false;
+	//	}
 
-			//Update the surface
-			SDL_UpdateWindowSurface(window);
+	//	return success;
+	//}
 
-		}
-	}
+	//void RenderImage(std::string path)
+	//{
+	//	if (LoadMedia(path))
+	//	{
+	//		//Apply the image
+	//		SDL_BlitSurface(imageSurface, NULL, screenSurface, NULL);
+
+	//		//Update the surface
+	//		SDL_UpdateWindowSurface(window);
+
+	//	}
+	//}
+
+
 
 	void Close()
 	{
@@ -114,8 +117,10 @@ public:
 		imageSurface = NULL;
 
 		//Destroy window
+		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
 		window = NULL;
+		renderer = NULL;
 
 		//Quit SDL subsystems
 		SDL_Quit();

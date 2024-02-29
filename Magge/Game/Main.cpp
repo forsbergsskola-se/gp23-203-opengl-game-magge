@@ -7,6 +7,8 @@ and may not be redistributed without written permission.*/
 #include "Window.h"
 #include "Input.h"
 #include "String"
+#include "Texture.h"
+
 
 //Event handler
 SDL_Event e;
@@ -16,11 +18,11 @@ int main( int argc, char* args[] )
 	Window window{};
 	Input input{};
 
-	
 
 
+    //SDL_Surface* imageSurface = SDL_LoadBMP("Resources/cat.bmp");
+	Texture texture{ "Resources/image.png", window.renderer};
 
-    SDL_Surface* imageSurface = SDL_LoadBMP("Resources/cat.bmp");
 
 	bool quit = false;
 
@@ -35,7 +37,8 @@ int main( int argc, char* args[] )
 
 			if (key == Key::Up)
 			{
-				window.RenderImage(imageSurface);
+				//window.RenderImage("Resources/image.png");
+				texture.Render();
 			}
 			else if (key == Key::Down)
 			{
@@ -46,6 +49,8 @@ int main( int argc, char* args[] )
 				quit = true;
 			}
 		}
+
+		
 	}
 
 	window.Close();
