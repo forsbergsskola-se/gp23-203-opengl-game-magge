@@ -19,7 +19,7 @@ enum Key
 class Input
 {
 public:
-	Key KeyPressed(SDL_Keycode input) const
+	static Key KeyPressed(SDL_Keycode input)
 	{
 		switch (input)
 		{

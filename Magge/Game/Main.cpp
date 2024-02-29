@@ -5,10 +5,9 @@ and may not be redistributed without written permission.*/
 #include <SDL.h>
 #include <stdio.h>
 #include "Window.h"
-#include "Input.h"
-#include "String"
 #include "Texture.h"
-#include "Mesh.h"
+#include "Player.h"
+#include "Input.h"
 
 //Event handler
 SDL_Event e;
@@ -16,9 +15,10 @@ SDL_Event e;
 int main( int argc, char* args[] )
 {
 	Window window{};
-	Input input{};
 
 
+	Player player{};
+	//Input input{ };
 
     //SDL_Surface* imageSurface = SDL_LoadBMP("Resources/cat.bmp");
 	Texture texture{ "Resources/image.png", window.renderer};
@@ -33,37 +33,15 @@ int main( int argc, char* args[] )
 	while (!quit)
 	{
 		window.Clear();
-		mesh1.Render(window.renderer);
-
-
+		player.mesh->Render(window.renderer);
 		//Handle events on queue
 		while (SDL_PollEvent(&e) != 0)
 		{
+			Key key = Input::KeyPressed(e.key.keysym.sym);
 
-			Key key = input.KeyPressed(e.key.keysym.sym);
+			player.PlayerInput(e, key);
 
-
-
-			if (key == Key::Up)
-			{
-				//texture.Render();
-				mesh1.fillRect.y-=10;
-
-			}
-			else if (key == Key::Down)
-			{
-				mesh1.fillRect.y+=10;
-			}
-			else if (key == Key::Left)
-			{
-				mesh1.fillRect.x-=10;
-				//mesh2.Render(window.renderer);
-			}
-			else if (key == Key::Right)
-			{
-				mesh1.fillRect.x+=10;
-				//mesh2.Render(window.renderer);
-			}
+			
 			//User requests quit
 			if (e.type == SDL_QUIT || key == Key::Escape)
 			{
@@ -76,6 +54,7 @@ int main( int argc, char* args[] )
 			SDL_RenderPresent(window.renderer);
 		}
 
+		player.Update();
 		
 	}
 
