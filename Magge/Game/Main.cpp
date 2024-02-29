@@ -6,6 +6,7 @@ and may not be redistributed without written permission.*/
 #include <stdio.h>
 #include "Window.h"
 #include "Input.h"
+#include "String"
 
 //Event handler
 SDL_Event e;
@@ -14,6 +15,10 @@ int main( int argc, char* args[] )
 {
 	Window window{};
 	Input input{ };
+
+	
+
+
 
     SDL_Surface* imageSurface = SDL_LoadBMP("Resources/cat.bmp");
 
