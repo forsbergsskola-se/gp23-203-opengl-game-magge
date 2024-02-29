@@ -13,7 +13,7 @@ SDL_Event e;
 int main( int argc, char* args[] )
 {
 	Window window{};
-	Input input{ };
+	Input input{};
 
     SDL_Surface* imageSurface = SDL_LoadBMP("Resources/cat.bmp");
 
