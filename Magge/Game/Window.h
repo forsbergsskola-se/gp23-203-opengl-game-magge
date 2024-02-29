@@ -11,11 +11,12 @@ class Window
 
 
 	//The surface contained by the window
-	SDL_Surface* screenSurface = NULL;
+	SDL_Surface* imageSurface = NULL;
 
 
 public:
 	//The window we'll be rendering to
+	SDL_Surface* screenSurface = NULL;
 	SDL_Window* window = NULL;
 
 	Window()
@@ -41,14 +42,13 @@ public:
 				//Fill the surface white
 				SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
 
-				//Update the surface
-				SDL_UpdateWindowSurface(window);
+				////Update the surface
+				//SDL_UpdateWindowSurface(window);
 
-				//Hack to get window to stay up
-				SDL_Event e; bool quit = false; while (quit == false) { while (SDL_PollEvent(&e)) { if (e.type == SDL_QUIT) quit = true; } }
+				////Hack to get window to stay up
+				//SDL_Event e; bool quit = false; while (quit == false) { while (SDL_PollEvent(&e)) { if (e.type == SDL_QUIT) quit = true; } }
 			}
 		}
-
 
 	}
 
@@ -57,14 +57,14 @@ public:
 		
 	}
 
-	bool LoadMedia()
+	bool LoadMedia(SDL_Surface* image)
 	{
 		//Loading success flag
 		bool success = true;
 
 		//Load splash image
-		screenSurface = SDL_LoadBMP("Resources/cat.bmp");
-		if (screenSurface == NULL)
+		imageSurface = image;
+		if (imageSurface == NULL)
 		{
 			printf("Unable to load image %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError());
 			success = false;
@@ -73,11 +73,26 @@ public:
 		return success;
 	}
 
+	void RenderImage(SDL_Surface* image)
+	{
+		if (LoadMedia(image))
+		{
+			//Apply the image
+			SDL_BlitSurface(imageSurface, NULL, screenSurface, NULL);
+
+			//Update the surface
+			SDL_UpdateWindowSurface(window);
+
+			//Hack to get window to stay up
+			SDL_Event e; bool quit = false; while (quit == false) { while (SDL_PollEvent(&e)) { if (e.type == SDL_QUIT) quit = true; } }
+		}
+	}
+
 	void Close()
 	{
 		//Deallocate surface
-		SDL_FreeSurface(screenSurface);
-		screenSurface = NULL;
+		SDL_FreeSurface(imageSurface);
+		imageSurface = NULL;
 
 		//Destroy window
 		SDL_DestroyWindow(window);
