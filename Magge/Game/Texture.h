@@ -46,8 +46,7 @@ public:
 		//Render texture to screen
 		SDL_RenderCopy(renderer, texture, NULL, NULL);
 
-		//Update screen
-		SDL_RenderPresent(renderer);
+		
 	}
 
 };

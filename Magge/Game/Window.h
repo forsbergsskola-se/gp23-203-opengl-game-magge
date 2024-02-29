@@ -9,9 +9,6 @@
 
 class Window
 {
-	//Screen dimension constants
-	const int SCREEN_WIDTH = 1280;
-	const int SCREEN_HEIGHT = 720;
 
 
 	//The surface contained by the window
@@ -19,6 +16,9 @@ class Window
 
 
 public:
+	//Screen dimension constants
+	const int SCREEN_WIDTH = 1280;
+	const int SCREEN_HEIGHT = 720;
 	//The window we'll be rendering to
 	SDL_Surface* screenSurface = NULL;
 	SDL_Window* window = NULL;
@@ -109,6 +109,11 @@ public:
 	//}
 
 
+	void Clear()
+	{
+		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
+		SDL_RenderClear(renderer);
+	}
 
 	void Close()
 	{

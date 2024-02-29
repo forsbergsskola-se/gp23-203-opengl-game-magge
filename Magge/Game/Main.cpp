@@ -8,7 +8,7 @@ and may not be redistributed without written permission.*/
 #include "Input.h"
 #include "String"
 #include "Texture.h"
-
+#include "Mesh.h"
 
 //Event handler
 SDL_Event e;
@@ -22,32 +22,58 @@ int main( int argc, char* args[] )
 
     //SDL_Surface* imageSurface = SDL_LoadBMP("Resources/cat.bmp");
 	Texture texture{ "Resources/image.png", window.renderer};
+	Mesh mesh1{100, 100, 50, 50};
+	Mesh mesh2{ 30, 30, 30, 30 };
+
+
 
 
 	bool quit = false;
 
 	while (!quit)
 	{
-		
+		window.Clear();
+		mesh1.Render(window.renderer);
+
 
 		//Handle events on queue
 		while (SDL_PollEvent(&e) != 0)
 		{
+
 			Key key = input.KeyPressed(e.key.keysym.sym);
+
+
 
 			if (key == Key::Up)
 			{
-				//window.RenderImage("Resources/image.png");
-				texture.Render();
+				//texture.Render();
+				mesh1.fillRect.y-=10;
+
 			}
 			else if (key == Key::Down)
 			{
+				mesh1.fillRect.y+=10;
+			}
+			else if (key == Key::Left)
+			{
+				mesh1.fillRect.x-=10;
+				//mesh2.Render(window.renderer);
+			}
+			else if (key == Key::Right)
+			{
+				mesh1.fillRect.x+=10;
+				//mesh2.Render(window.renderer);
 			}
 			//User requests quit
 			if (e.type == SDL_QUIT || key == Key::Escape)
 			{
 				quit = true;
 			}
+
+			
+
+			//Update screen
+			SDL_RenderPresent(window.renderer);
 		}
 
 		
