@@ -32,7 +32,7 @@ public:
 		collider.y = posY;
 	}
 
-	bool IsColliding(SDL_Rect otherRect)
+	bool IsColliding(SDL_Rect &otherRect)
 	{
 		//The sides of the rectangles
 		int leftA, leftB;
