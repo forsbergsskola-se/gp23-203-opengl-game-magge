@@ -27,9 +27,6 @@ int main( int argc, char* args[] )
 	GameObject gameObject{ 50, Window::SCREEN_HEIGHT + 100, 50, 50 };
 
 
-	Texture texture{ "Resources/image.png", window.renderer};
-	
-
 	bool quit = false;
 
 	while (!quit)
