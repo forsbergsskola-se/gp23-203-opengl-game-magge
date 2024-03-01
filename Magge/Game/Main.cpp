@@ -26,15 +26,11 @@ int main( int argc, char* args[] )
 
 
 	Player player{};
-	//Input input{ };
 
-    //SDL_Surface* imageSurface = SDL_LoadBMP("Resources/cat.bmp");
+
+
 	Texture texture{ "Resources/image.png", window.renderer};
-	Mesh mesh1{100, 100, 50, 50};
-	Mesh mesh2{ 30, 30, 30, 30 };
-
-
-
+	
 
 	bool quit = false;
 
@@ -43,7 +39,7 @@ int main( int argc, char* args[] )
 		window.Clear();
 		capTimer.Start();
 
-		player.mesh->Render(window.renderer);
+		player.mesh.Render(window.renderer);
 
 
 		//Handle events on queue

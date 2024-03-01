@@ -8,11 +8,9 @@ class Player : public GameObject
 {
 public:
 
-	Player()
+	Player() : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50 }
 	{
-		mesh = new Mesh{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50};
-		velX = 0;
-		velY = 0;
+
 	}
 
 
@@ -49,23 +47,23 @@ public:
 
 	void Move(int posX, int posY)
 	{
-		mesh->rect.x = posX;
-		mesh->rect.y = posY;
+		mesh.rect.x = posX;
+		mesh.rect.y = posY;
 	}
 
 	void Update()
 	{
-		int mPosX = mesh->rect.x + velX;
-		int mPosY = mesh->rect.y + velY;
+		int mPosX = mesh.rect.x + velX;
+		int mPosY = mesh.rect.y + velY;
 
-		if ((mPosX < 0) || (mPosX + mesh->rect.w > Window::SCREEN_WIDTH))
+		if ((mPosX < 0) || (mPosX + mesh.rect.w > Window::SCREEN_WIDTH))
 		{
 			//Move back
 			mPosX -= velX;
 		}
 
 		//If the dot went too far up or down
-		if ((mPosY < 0) || (mPosY + mesh->rect.h > Window::SCREEN_HEIGHT))
+		if ((mPosY < 0) || (mPosY + mesh.rect.h > Window::SCREEN_HEIGHT))
 		{
 			//Move back
 			mPosY -= velY;
