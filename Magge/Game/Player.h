@@ -2,16 +2,11 @@
 #include "Mesh.h"
 #include "Input.h"
 #include "Window.h"
+#include "GameObject.h"
 
-class Player
+class Player : public GameObject
 {
 public:
-
-	Mesh* mesh;
-	int moveSpeed = 10;
-
-	int velX;
-	int velY;
 
 	Player()
 	{
