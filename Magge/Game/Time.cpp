@@ -67,6 +67,17 @@ void Time::Unpause()
 	}
 }
 
+void Time::CapFPS(const int screenTick)
+{
+	//If frame finished early
+	int frameTicks = GetTicks();
+	if (frameTicks < screenTick)
+	{
+		//Wait remaining time
+		SDL_Delay(screenTick - frameTicks);
+	}
+}
+
 
 Uint32 Time::GetTicks()
 {

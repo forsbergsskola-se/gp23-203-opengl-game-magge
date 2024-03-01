@@ -61,23 +61,10 @@ int main( int argc, char* args[] )
 		//Update screen
 		SDL_RenderPresent(window.renderer);
 
-		//Calculate and correct fps
-		float avgFPS = countedFrames / (time.GetTicks() / 1000.f);
-		if (avgFPS > 2000000)
-			avgFPS = 0;
-		
 		player.Update();
 
 		++countedFrames;
-
-		//If frame finished early
-		int frameTicks = capTimer.GetTicks();
-		if (frameTicks < SCREEN_TICK_PER_FRAME)
-		{
-			//Wait remaining time
-			SDL_Delay(SCREEN_TICK_PER_FRAME - frameTicks);
-		}
-
+		capTimer.CapFPS(SCREEN_TICK_PER_FRAME);
 	}
 
 	window.Close();

@@ -12,6 +12,8 @@ public:
 	void Pause();
 	void Unpause();
 
+	void CapFPS(const int screenTick);
+
 	//Gets the timer's time
 	Uint32 GetTicks();
 
