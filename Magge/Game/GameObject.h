@@ -15,5 +15,10 @@ public:
 		velX = 0;
 		velY = 0;
 	}
+
+	void Render()
+	{
+		mesh.Render();
+	}
 };
 

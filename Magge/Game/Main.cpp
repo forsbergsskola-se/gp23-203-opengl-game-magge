@@ -23,10 +23,8 @@ int main( int argc, char* args[] )
 	Time capTimer{};
 	time.Start();
 	int countedFrames = 0;
-
-
 	Player player{};
-
+	GameObject gameObject{ 50, Window::SCREEN_HEIGHT + 100, 50, 50 };
 
 
 	Texture texture{ "Resources/image.png", window.renderer};
@@ -39,8 +37,8 @@ int main( int argc, char* args[] )
 		window.Clear();
 		capTimer.Start();
 
-		player.mesh.Render(window.renderer);
-
+		player.Render();
+		gameObject.Render();
 
 		//Handle events on queue
 		while (SDL_PollEvent(&e) != 0)

@@ -13,10 +13,10 @@ public:
 		
 	}
 
-	void Render(SDL_Renderer* renderer)
+	void Render()
 	{
-		SDL_SetRenderDrawColor(renderer, 0xFF, 0x99, 0x00, 0xFF);
-		SDL_RenderFillRect(renderer, &rect);
+		SDL_SetRenderDrawColor(Window::renderer, 0xFF, 0x99, 0x00, 0xFF);
+		SDL_RenderFillRect(Window::renderer, &rect);
 	}
 
 	~Mesh() {};
