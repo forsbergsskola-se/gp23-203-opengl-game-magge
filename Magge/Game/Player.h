@@ -21,29 +21,6 @@ public:
 	}
 
 
-	void PlayerInput(SDL_Event& e, Key& key)
-	{
-		//If a key was pressed
-		if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
-		{
-			switch (key)
-			{
-				case Key::Left: velX = -moveSpeed; break;
-				case Key::Right: velX = moveSpeed; break;
-			}
-		}
-		//If a key was released
-		else if (e.type == SDL_KEYUP && e.key.repeat == 0)
-		{
-			switch (key)
-			{
-				case Key::Left: velX = 0;
-				case Key::Right: velX = 0;
-			}
-		}
-
-	}
-
 	void PlayerInput(const Uint8* currentKeyStates)
 	{
 
