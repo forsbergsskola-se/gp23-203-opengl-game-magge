@@ -18,5 +18,8 @@ public:
 		SDL_SetRenderDrawColor(renderer, 0xFF, 0x99, 0x00, 0xFF);
 		SDL_RenderFillRect(renderer, &rect);
 	}
+
+	~Mesh() {};
+
 };
 

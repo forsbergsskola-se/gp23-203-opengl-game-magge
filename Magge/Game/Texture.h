@@ -46,6 +46,9 @@ public:
 		}
 	}
 
+
+	// We may need params here to render a texture at a specific point
+	// Render( int x, int y, SDL_Rect* clip) See "CLip rendering and Sprite Sheets"
 	void Render()
 	{
 		//Clear screen
