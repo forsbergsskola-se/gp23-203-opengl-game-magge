@@ -1,6 +1,7 @@
 #pragma once
 #include "Mesh.h"
 #include "Input.h"
+#include "Window.h"
 
 class Player
 {
@@ -14,7 +15,7 @@ public:
 
 	Player()
 	{
-		mesh = new Mesh{600, 600, 50, 50};
+		mesh = new Mesh{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50};
 		velX = 0;
 		velY = 0;
 	}
@@ -25,41 +26,79 @@ public:
 		//If a key was pressed
 		if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 		{
-
-			if (key == Key::Up)
+			switch (key)
 			{
-				velY = -moveSpeed;
-				printf("Men hallå?");
-
+				case Key::Left: velX = -moveSpeed; break;
+				case Key::Right: velX = moveSpeed; break;
 			}
-			else if (key == Key::Down)
-			{
-				velY = moveSpeed;
-			}
-
-			if (key == Key::Left)
-			{
-				velX = -moveSpeed;
-			}
-			else if (key == Key::Right)
-			{
-				velX = moveSpeed;
-			}
-				
 		}
-		////If a key was released
-		//else if (e.type == SDL_KEYUP && e.key.repeat == 0)
-		//{
-		//	velX = 0;
-		//	velY = 0;
-		//}
+		//If a key was released
+		else if (e.type == SDL_KEYUP && e.key.repeat == 0)
+		{
+			switch (key)
+			{
+				case Key::Left: velX = 0;
+				case Key::Right: velX = 0;
+			}
+		}
 
+	}
+
+	void PlayerInput(const Uint8* currentKeyStates)
+	{
+
+		if (currentKeyStates[SDL_SCANCODE_SPACE])
+		{
+			//Shoot
+			printf("PEW PEW!");
+		}
+
+		if (currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_RIGHT])
+		{
+			velX = 0;
+			return;
+		}
+
+		if (currentKeyStates[SDL_SCANCODE_LEFT])
+		{
+			velX = -moveSpeed;
+			return;
+		}
+		if (currentKeyStates[SDL_SCANCODE_RIGHT])
+		{
+			velX = moveSpeed;
+			return;
+		}
+
+
+		velX = 0;
+	}
+
+
+	void Move(int posX, int posY)
+	{
+		mesh->rect.x = posX;
+		mesh->rect.y = posY;
 	}
 
 	void Update()
 	{
-		mesh->rect.x += velX;
-		mesh->rect.y += velY;
+		int mPosX = mesh->rect.x + velX;
+		int mPosY = mesh->rect.y + velY;
+
+		if ((mPosX < 0) || (mPosX + mesh->rect.w > Window::SCREEN_WIDTH))
+		{
+			//Move back
+			mPosX -= velX;
+		}
+
+		//If the dot went too far up or down
+		if ((mPosY < 0) || (mPosY + mesh->rect.h > Window::SCREEN_HEIGHT))
+		{
+			//Move back
+			mPosY -= velY;
+		}
+		Move(mPosX, mPosY);
 	}
 
 };

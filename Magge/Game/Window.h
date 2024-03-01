@@ -17,8 +17,8 @@ class Window
 
 public:
 	//Screen dimension constants
-	const int SCREEN_WIDTH = 1280;
-	const int SCREEN_HEIGHT = 720;
+	static const int SCREEN_WIDTH = 1280;
+	static const int SCREEN_HEIGHT = 720;
 	//The window we'll be rendering to
 	SDL_Surface* screenSurface = NULL;
 	SDL_Window* window = NULL;
@@ -76,37 +76,6 @@ public:
 	{
 		
 	}
-
-
-
-	//bool LoadMedia(std::string path)
-	//{
-	//	//Loading success flag
-	//	bool success = true;
-
-	//	//Load splash image
-	//	Texture texture{ path, renderer};
-	//	if (texture.texture == NULL)
-	//	{
-	//		printf("Unable to load texture %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError());
-	//		success = false;
-	//	}
-
-	//	return success;
-	//}
-
-	//void RenderImage(std::string path)
-	//{
-	//	if (LoadMedia(path))
-	//	{
-	//		//Apply the image
-	//		SDL_BlitSurface(imageSurface, NULL, screenSurface, NULL);
-
-	//		//Update the surface
-	//		SDL_UpdateWindowSurface(window);
-
-	//	}
-	//}
 
 
 	void Clear()

@@ -51,17 +51,19 @@ int main( int argc, char* args[] )
 		{
 			Key key = Input::KeyPressed(e.key.keysym.sym);
 
-			player.PlayerInput(e, key);
+			const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+			player.PlayerInput(currentKeyStates);
 
 			//User requests quit
 			if (e.type == SDL_QUIT || key == Key::Escape)
 				quit = true;
+
 		}
+		player.Update();
 
 		//Update screen
 		SDL_RenderPresent(window.renderer);
 
-		player.Update();
 
 		++countedFrames;
 		capTimer.CapFPS(SCREEN_TICK_PER_FRAME);
