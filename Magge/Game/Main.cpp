@@ -43,10 +43,11 @@ int main( int argc, char* args[] )
 	for (int i = 0; i < projectilePoolCount; i++)
 	{
 		Projectile projectile{};
+		projectile.isActive = false;
 		gameObjects.push_back(&projectile);
 		player.projectiles.push_back(&projectile);
+
 	}
-	
 
 	bool quit = false;
 
@@ -55,8 +56,10 @@ int main( int argc, char* args[] )
 		window.Clear();
 		capTimer.Start();
 
-		player.Render();
-
+		for (GameObject* go : gameObjects)
+		{
+			go->Render();
+		}
 		//Handle events on queue
 		while (SDL_PollEvent(&e) != 0)
 		{

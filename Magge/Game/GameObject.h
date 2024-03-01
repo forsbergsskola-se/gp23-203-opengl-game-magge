@@ -4,6 +4,8 @@
 class GameObject
 {
 public:
+	bool isActive;
+
 	Mesh mesh;
 	SDL_Rect collider;
 	int moveSpeed = 10;
@@ -21,6 +23,8 @@ public:
 
 		collider.w = width;
 		collider.h = height;
+
+		isActive = true;
 	}
 
 	void Move(int posX, int posY)
@@ -67,7 +71,8 @@ public:
 
 	void Render()
 	{
-		mesh.Render();
+		if(isActive)
+			mesh.Render();
 	}
 };
 

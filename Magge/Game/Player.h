@@ -5,29 +5,51 @@
 #include "GameObject.h"
 #include "Projectile.h"
 #include <vector>
+#include "Time.h"
 
 class Player : public GameObject
 {
 public:
 
 	std::vector<Projectile*> projectiles;
+	float shootCooldown = 0.01;
+	Time shootTimer;
 
 	Player() : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50 }
 	{
+		shootCooldown = 1;
 
+		Time shootTimer{};
+		//shootTimer.Start();
 	}
 
 
 	void PlayerInput(const Uint8* currentKeyStates)
 	{
 
+
 		if (currentKeyStates[SDL_SCANCODE_SPACE])
 		{
-			//Shoot
-			printf("PEW PEW!");
-			//Find Usable Projectile
-			//Move it to player pos
-			//Make it unusable until it is outside of screen
+			//printf("%d\n", shootTimer.GetTicks());
+
+			if (!shootTimer.IsStarted() || shootTimer.GetTicks() >= shootCooldown * 1000)
+			{
+				shootTimer.Stop();
+				shootTimer.Start();
+
+				//Object Pooling
+				for (Projectile* projectile : projectiles)
+				{
+					if (!projectile->isActive)
+					{
+						projectile->isActive = true;
+						projectile->Move(mesh.rect.x, mesh.rect.y);
+						break;
+					}
+				}
+			}
+
+			
 		}
 
 		if (currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_RIGHT])
@@ -65,7 +87,6 @@ public:
 			mPosX -= velX;
 		}
 
-		//If the dot went too far up or down
 		if ((mPosY < 0) || (mPosY + mesh.rect.h > Window::SCREEN_HEIGHT))
 		{
 			//Move back
