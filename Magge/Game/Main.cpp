@@ -24,7 +24,6 @@ int main( int argc, char* args[] )
 	time.Start();
 	int countedFrames = 0;
 	Player player{};
-	GameObject gameObject{ 50, Window::SCREEN_HEIGHT + 100, 50, 50 };
 
 
 	bool quit = false;
@@ -35,7 +34,6 @@ int main( int argc, char* args[] )
 		capTimer.Start();
 
 		player.Render();
-		gameObject.Render();
 
 		//Handle events on queue
 		while (SDL_PollEvent(&e) != 0)
@@ -51,6 +49,7 @@ int main( int argc, char* args[] )
 
 		}
 		player.Update();
+
 
 		//Update screen
 		SDL_RenderPresent(window.renderer);

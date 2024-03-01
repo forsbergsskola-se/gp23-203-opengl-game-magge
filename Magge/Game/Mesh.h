@@ -10,7 +10,7 @@ public:
 	Mesh(int x, int y, int w, int h)
 	{
 		rect = { x, y, w, h};
-		
+		printf("%d\n", x);
 	}
 
 	void Render()

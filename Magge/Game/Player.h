@@ -45,11 +45,7 @@ public:
 	}
 
 
-	void Move(int posX, int posY)
-	{
-		mesh.rect.x = posX;
-		mesh.rect.y = posY;
-	}
+	
 
 	void Update()
 	{
