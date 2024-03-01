@@ -3,7 +3,8 @@
 
 class Projectile : public GameObject
 {
-	Projectile(int xPos, int yPos) : GameObject{ xPos, yPos, 10, 30 }
+public:
+	Projectile() : GameObject{ -10, -10, 10, 30 }
 	{
 
 	}

@@ -7,14 +7,19 @@ and may not be redistributed without written permission.*/
 #include "Window.h"
 #include "Texture.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Input.h"
 #include "Time.h"
+#include <vector>
 
 //Event handler
 SDL_Event e;
 
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
+
+int enemyCount = 20;
+int projectilePoolCount = 15;
 
 int main( int argc, char* args[] )
 {
@@ -25,6 +30,23 @@ int main( int argc, char* args[] )
 	int countedFrames = 0;
 	Player player{};
 
+
+	std::vector<GameObject*> gameObjects;
+	gameObjects.push_back(&player);
+	
+	for (int i = 0; i < enemyCount; i++)
+	{
+		Enemy enemy{ i * 100, 30 };
+		gameObjects.push_back(&enemy);
+	}
+
+	for (int i = 0; i < projectilePoolCount; i++)
+	{
+		Projectile projectile{};
+		gameObjects.push_back(&projectile);
+		player.projectiles.push_back(&projectile);
+	}
+	
 
 	bool quit = false;
 
@@ -48,8 +70,11 @@ int main( int argc, char* args[] )
 				quit = true;
 
 		}
-		player.Update();
-
+		//player.Update();
+		for (GameObject* go : gameObjects)
+		{
+			go->Update();
+		}
 
 		//Update screen
 		SDL_RenderPresent(window.renderer);

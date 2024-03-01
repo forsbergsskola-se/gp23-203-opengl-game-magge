@@ -60,6 +60,11 @@ public:
 		return true;
 	}
 
+	virtual void Update()
+	{
+
+	}
+
 	void Render()
 	{
 		mesh.Render();

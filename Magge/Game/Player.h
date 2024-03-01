@@ -3,10 +3,14 @@
 #include "Input.h"
 #include "Window.h"
 #include "GameObject.h"
+#include "Projectile.h"
+#include <vector>
 
 class Player : public GameObject
 {
 public:
+
+	std::vector<Projectile*> projectiles;
 
 	Player() : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50 }
 	{
@@ -21,6 +25,9 @@ public:
 		{
 			//Shoot
 			printf("PEW PEW!");
+			//Find Usable Projectile
+			//Move it to player pos
+			//Make it unusable until it is outside of screen
 		}
 
 		if (currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_RIGHT])
@@ -47,7 +54,7 @@ public:
 
 	
 
-	void Update()
+	virtual void Update() override
 	{
 		int mPosX = mesh.rect.x + velX;
 		int mPosY = mesh.rect.y + velY;
