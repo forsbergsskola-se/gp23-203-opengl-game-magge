@@ -37,6 +37,14 @@ public:
 		}
 	}
 
+	~Texture() 
+	{
+		if (texture != NULL)
+		{
+			SDL_DestroyTexture(texture);
+			texture = NULL;
+		}
+	}
 
 	void Render()
 	{
