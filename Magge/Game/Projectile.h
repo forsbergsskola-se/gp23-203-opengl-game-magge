@@ -4,10 +4,11 @@
 class Projectile : public GameObject
 {
 public:
-
-	Projectile() : GameObject{ -10, -10, 30, 70 }
+	int speed;
+	Projectile() : GameObject{ -10, -10, 10, 25 }
 	{
 		isActive = false;
+		speed = 10;
 	}
 
 	virtual void Update() override
@@ -18,7 +19,7 @@ public:
 		if (mesh.rect.y < 0)
 			isActive = false;
 
-		Move(mesh.rect.x, mesh.rect.y - 1);
+		Move(mesh.rect.x, mesh.rect.y - speed);
 
 	}
 

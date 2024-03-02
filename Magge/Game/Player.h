@@ -17,7 +17,7 @@ public:
 
 	Player() : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50 }
 	{
-		shootCooldown = 1;
+		shootCooldown = 0.5f;
 
 		Time shootTimer{};
 	}
@@ -77,7 +77,6 @@ public:
 
 	virtual void Update() override
 	{
-
 		int mPosX = mesh.rect.x + velX;
 		int mPosY = mesh.rect.y + velY;
 		//printf("%d\n", mPosX);
