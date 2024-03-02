@@ -19,6 +19,9 @@ public:
 	{
 		for (Projectile* projectile : player->projectiles)
 		{
+			if (!projectile->isActive)
+				continue;
+
 			if (IsColliding(projectile->collider))
 			{
 				projectile->isActive = false;
