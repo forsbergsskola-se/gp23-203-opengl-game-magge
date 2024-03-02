@@ -11,6 +11,7 @@ and may not be redistributed without written permission.*/
 #include "Input.h"
 #include "Time.h"
 #include <vector>
+#include "Enemy.h"
 
 //Event handler
 SDL_Event e;
@@ -31,6 +32,7 @@ int main( int argc, char* args[] )
 	Player player{};
 
 	std::vector<GameObject*> gameObjects;
+	std::vector<Enemy*> enemies;
 
 	gameObjects.push_back(&player);
 
@@ -38,6 +40,7 @@ int main( int argc, char* args[] )
 	{
 		auto* enemy = new Enemy{ i * 80, 30, &player};
 		gameObjects.push_back(enemy);
+		enemies.push_back(enemy);
 	}
 
 	for (int i = 0; i < projectilePoolCount; i++)
@@ -78,7 +81,20 @@ int main( int argc, char* args[] )
 		{
 			if(go->isActive)
 				go->Update();
+
 		}
+		for (Enemy* enemy : enemies)
+		{
+			if (enemy->IsNearWall())
+			{
+				for (Enemy* enemy : enemies)
+				{
+					enemy->ReachWallEvent();
+				}
+				break;
+			}
+		}
+
 
 		//Update screen
 		SDL_RenderPresent(window.renderer);

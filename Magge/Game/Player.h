@@ -13,13 +13,11 @@ public:
 
 	std::vector<Projectile*> projectiles;
 	float shootCooldown;
-	Time shootTimer;
+	Time shootTimer{};
 
 	Player() : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50 }
 	{
 		shootCooldown = 0.5f;
-
-		Time shootTimer{};
 	}
 
 
