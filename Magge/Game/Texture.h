@@ -1,20 +1,18 @@
 #pragma once
+#include "Window.h"
 #include <SDL_image.h>
 #include "String"
 
 
-
 class Texture
 {
-public:
-
-	SDL_Texture* texture;
 	SDL_Renderer* renderer;
+	static SDL_Texture* texture;
+public:
 
 	Texture(std::string path, SDL_Renderer* renderer)
 	{
 		this->renderer = renderer;
-
 		//Load image at specified path
 		SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 		if (loadedSurface == NULL)

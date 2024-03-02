@@ -5,7 +5,6 @@ and may not be redistributed without written permission.*/
 #include <SDL.h>
 #include <stdio.h>
 #include "Window.h"
-#include "Texture.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Input.h"
@@ -25,11 +24,15 @@ int projectilePoolCount = 20;
 int main( int argc, char* args[] )
 {
 	Window window{};
+
+	Texture background{ "Resources/Space.png", window.renderer };
+
 	Time time{};
 	Time capTimer{};
 	time.Start();
 	int countedFrames = 0;
 	Player player{};
+
 
 	std::vector<GameObject*> gameObjects;
 	std::vector<Enemy*> enemies;
@@ -57,6 +60,8 @@ int main( int argc, char* args[] )
 	{
 		window.Clear();
 		capTimer.Start();
+
+		background.Render();
 
 		for (GameObject* go : gameObjects)
 		{
