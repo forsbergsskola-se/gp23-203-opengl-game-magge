@@ -12,7 +12,7 @@ class Player : public GameObject
 public:
 
 	std::vector<Projectile*> projectiles;
-	float shootCooldown = 0.01;
+	float shootCooldown;
 	Time shootTimer;
 
 	Player() : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50 }
@@ -20,7 +20,6 @@ public:
 		shootCooldown = 1;
 
 		Time shootTimer{};
-		//shootTimer.Start();
 	}
 
 
@@ -30,7 +29,6 @@ public:
 
 		if (currentKeyStates[SDL_SCANCODE_SPACE])
 		{
-			//printf("%d\n", shootTimer.GetTicks());
 
 			if (!shootTimer.IsStarted() || shootTimer.GetTicks() >= shootCooldown * 1000)
 			{
@@ -60,6 +58,7 @@ public:
 
 		if (currentKeyStates[SDL_SCANCODE_LEFT])
 		{
+
 			velX = -moveSpeed;
 			return;
 		}
@@ -78,8 +77,10 @@ public:
 
 	virtual void Update() override
 	{
+
 		int mPosX = mesh.rect.x + velX;
 		int mPosY = mesh.rect.y + velY;
+		//printf("%d\n", mPosX);
 
 		if ((mPosX < 0) || (mPosX + mesh.rect.w > Window::SCREEN_WIDTH))
 		{
