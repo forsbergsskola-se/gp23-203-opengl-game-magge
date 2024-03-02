@@ -9,7 +9,7 @@ public:
 
 	float moveDelay = 1.0f;
 	Time moveTimer{};
-	const float delayMultiplier = 0.9f;
+	const float delayMultiplier = 0.8f;
 
 	Enemy(int xPos, int yPos, Player* p) : GameObject{ xPos, yPos, 50, 50 }
 	{
@@ -59,11 +59,11 @@ public:
 
 	bool IsNearWall()
 	{
-		if (velX > 0 && mesh.rect.x >= Window::SCREEN_WIDTH - mesh.rect.w - 30)
+		if (velX > 0 && mesh.rect.x >= Window::SCREEN_WIDTH - mesh.rect.w - 20)
 		{
 			return true;
 		}
-		else if (velX < 0 && mesh.rect.x <= 0 + mesh.rect.w + 30)
+		else if (velX < 0 && mesh.rect.x <= 0 + mesh.rect.w + 20)
 		{
 			return true;
 		}
