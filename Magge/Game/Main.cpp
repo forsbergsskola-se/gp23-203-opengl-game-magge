@@ -19,7 +19,7 @@ SDL_Event e;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 
-int enemyCount = 20;
+int enemyCount[4]{10, 10, 10, 10};
 int projectilePoolCount = 20;
 
 int main( int argc, char* args[] )
@@ -35,13 +35,13 @@ int main( int argc, char* args[] )
 	std::vector<Enemy*> enemies;
 
 	gameObjects.push_back(&player);
-
-	for (int i = 0; i < enemyCount; i++)
-	{
-		auto* enemy = new Enemy{ i * 80, 30, &player};
-		gameObjects.push_back(enemy);
-		enemies.push_back(enemy);
-	}
+	for(int y = 0; y < sizeof(enemyCount) / sizeof(int); y++)
+		for (int i = 0; i < enemyCount[y]; i++)
+		{
+			auto* enemy = new Enemy{ i * 80 + 100, y * 80 + 30, &player};
+			gameObjects.push_back(enemy);
+			enemies.push_back(enemy);
+		}
 
 	for (int i = 0; i < projectilePoolCount; i++)
 	{
@@ -77,12 +77,6 @@ int main( int argc, char* args[] )
 
 		}
 		//player.Update();
-		for (GameObject* go : gameObjects)
-		{
-			if(go->isActive)
-				go->Update();
-
-		}
 		for (Enemy* enemy : enemies)
 		{
 			if (enemy->IsNearWall())
@@ -93,6 +87,12 @@ int main( int argc, char* args[] )
 				}
 				break;
 			}
+		}
+		for (GameObject* go : gameObjects)
+		{
+			if(go->isActive)
+				go->Update();
+
 		}
 
 

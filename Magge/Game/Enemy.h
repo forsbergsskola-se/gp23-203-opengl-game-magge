@@ -7,17 +7,18 @@ class Enemy : public GameObject
 public:
 	Player* player;
 
-	float moveDelay;
+	float moveDelay = 1.0f;
 	Time moveTimer{};
+	const float delayMultiplier = 0.9f;
 
 	Enemy(int xPos, int yPos, Player* p) : GameObject{ xPos, yPos, 50, 50 }
 	{
 		this->player = p;
-		moveDelay = 1.0f;
 		moveTimer.Start();
 
 		velX = 25;
 		velY = 25;
+		moveDelay = 1.0f;
 	}
 
 	void CheckMove()
@@ -53,15 +54,16 @@ public:
 	{
 		velX = -velX;
 		Move(mesh.rect.x, mesh.rect.y + velY);
+		moveDelay *= delayMultiplier;
 	}
 
 	bool IsNearWall()
 	{
-		if (velX > 0 && mesh.rect.x >= Window::SCREEN_WIDTH - mesh.rect.w)
+		if (velX > 0 && mesh.rect.x >= Window::SCREEN_WIDTH - mesh.rect.w - 30)
 		{
 			return true;
 		}
-		else if (velX < 0 && mesh.rect.x <= 0 + mesh.rect.w)
+		else if (velX < 0 && mesh.rect.x <= 0 + mesh.rect.w + 30)
 		{
 			return true;
 		}
