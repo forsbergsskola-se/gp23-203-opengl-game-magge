@@ -20,7 +20,6 @@ SDL_Event e;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 
-int enemyCount[4]{10, 10, 10, 10};
 
 int main( int argc, char* args[] )
 {
@@ -34,34 +33,10 @@ int main( int argc, char* args[] )
 	int countedFrames = 0;
 
 	//Game Objects
-	Player player{};
-	EnemyManager enemyManager{};
 	std::vector<GameObject*> gameObjects;
+	Player player{&gameObjects};
+	EnemyManager enemyManager{&gameObjects, &player};
 
-	gameObjects.push_back(&player);
-	for(int y = 0; y < sizeof(enemyCount) / sizeof(int); y++)
-		for (int i = 0; i < enemyCount[y]; i++)
-		{
-			auto* enemy = new Enemy{ i * 80 + 100, y * 80 + 30, &player};
-			gameObjects.push_back(enemy);
-			enemyManager.enemies.push_back(enemy);
-		}
-
-	for (int i = 0; i < player.projectileCount; i++)
-	{
-		auto* projectile = new Projectile{10};
-		projectile->isActive = false;
-		gameObjects.push_back(projectile);
-		player.projectiles.push_back(projectile);
-	}
-
-	for (int i = 0; i < enemyManager.bombCount; i++)
-	{
-		auto* projectile = new Projectile{ 10 };
-		projectile->isActive = false;
-		gameObjects.push_back(projectile);
-		enemyManager.bombs.push_back(projectile);
-	}
 
 	bool quit = false;
 

@@ -17,9 +17,20 @@ public:
 	int projectileCount = 20;
 
 
-	Player() : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50 }
+	Player(std::vector<GameObject*>* gameObjectList) : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50 }
 	{
 		shootCooldown = 0.5f;
+
+		gameObjectList->push_back(this);
+
+
+		for (int i = 0; i < projectileCount; i++)
+		{
+			auto* projectile = new Projectile{ 10 };
+			projectile->isActive = false;
+			gameObjectList->push_back(projectile);
+			projectiles.push_back(projectile);
+		}
 	}
 
 

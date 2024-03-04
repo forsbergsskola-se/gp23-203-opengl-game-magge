@@ -17,12 +17,13 @@ class Enemy : public GameObject
 		return false;
 	}
 	
-public:
 	Player* player;
 
 	float moveDelay = 1.0f;
 	Time moveTimer{};
 	const float delayMultiplier = 0.8f;
+
+public:
 
 	Enemy(int xPos, int yPos, Player* p) : GameObject{ xPos, yPos, 50, 50 }
 	{
@@ -84,9 +85,6 @@ public:
 		moveTimer.Start();
 	}
 
-	void DropBomb()
-	{
-
-	}
+	
 };
 
