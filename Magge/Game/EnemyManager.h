@@ -3,7 +3,10 @@
 #include <SDL.h>
 #include <cstdlib>
 #include <vector>
-#include "Enemy.h"
+
+class Enemy;
+class GameObject;
+class ProjectilePool;
 
 class EnemyManager
 {
@@ -16,7 +19,7 @@ class EnemyManager
 	ProjectilePool* bombs;
 
 public:
-	ProjectilePool* projectiles;
+	//ProjectilePool* projectiles;
 	std::vector<Enemy*> enemies;
 	int enemyRows[4]{ 10, 10, 10, 10 };
 	int enemyCount = 40;
@@ -25,7 +28,7 @@ public:
 	EnemyManager(std::vector<GameObject*>* gameObjectList, ProjectilePool* projectilePool, ProjectilePool* bombs);
 	~EnemyManager();
 
-
-
 	void Update();
+
+	void OnEnemyDeath();
 };

@@ -3,6 +3,7 @@
 #include "Time.h"
 #include "Projectile.h"
 #include "ProjectilePool.h"
+#include "EnemyManager.h"
 
 class EnemyManager;
 
@@ -24,11 +25,11 @@ class Enemy : public GameObject
 	float moveDelay = 1.0f;
 	Time moveTimer{};
 	const float delayMultiplier = 0.8f;
+	ProjectilePool* projectiles;
 	EnemyManager* enemyManager;
-
 public:
 
-	Enemy(int xPos, int yPos, EnemyManager* em) : GameObject{ xPos, yPos, 50, 50 }
+	Enemy(int xPos, int yPos, ProjectilePool* projectiles, EnemyManager* em) : GameObject{ xPos, yPos, 50, 50 }
 	{
 		moveTimer.Start();
 
@@ -36,7 +37,9 @@ public:
 		velY = 25;
 		moveDelay = 1.0f;
 
+		this->projectiles = projectiles;
 		enemyManager = em;
+		printf("%d", enemyManager->bombCount);
 	}
 
 
@@ -45,19 +48,18 @@ public:
 		if(IsTimeToMove())
 			Move(mesh.rect.x + velX, mesh.rect.y);
 
-		//printf("%d", enemyManager->bombCount);
+		for (Projectile* projectile : projectiles->pooledObjects)
+		{
+			if (!projectile->isActive)
+				continue;
 
-		//for (Projectile* projectile : enemyManager->projectiles->pooledObjects)
-		//{
-		//	if (!projectile->isActive)
-		//		continue;
-
-		//	if (IsColliding(projectile->collider))
-		//	{
-		//		projectile->isActive = false;
-		//		isActive = false;
-		//	}
-		//}
+			if (IsColliding(projectile->collider))
+			{
+				projectile->isActive = false;
+				isActive = false;
+				enemyManager->OnEnemyDeath();
+			}
+		}
 	}
 
 	
