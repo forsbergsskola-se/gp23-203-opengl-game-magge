@@ -1,1 +1,72 @@
 #include "EnemyManager.h"
+
+
+EnemyManager::EnemyManager(std::vector<GameObject*>* gameObjectList, Player* player)
+{
+	srand(SDL_GetTicks());
+	EnemyManager::shootTimer.Start();
+		
+	EnemyManager::shootDelay = (std::rand() % (EnemyManager::maxShootDelay - EnemyManager::minShootDelay) + EnemyManager::minShootDelay) * 0.01f;
+
+
+	for (int y = 0; y < sizeof(EnemyManager::enemyRows) / sizeof(int); y++)
+		for (int i = 0; i < EnemyManager::enemyRows[y]; i++)
+		{
+			auto* enemy = new Enemy{ i * 80 + 100, y * 80 + 30, player, this};
+			gameObjectList->push_back(enemy);
+			EnemyManager::enemies.push_back(enemy);
+		}
+
+	for (int i = 0; i < EnemyManager::bombCount; i++)
+	{
+		auto* projectile = new Projectile{ -10 };
+		projectile->isActive = false;
+		gameObjectList->push_back(projectile);
+		EnemyManager::bombs.push_back(projectile);
+	}
+
+}
+EnemyManager::~EnemyManager()
+{
+}
+
+void EnemyManager::Update()
+{
+	CheckWallEvent();
+
+	if (shootTimer.GetTicks() >= EnemyManager::shootDelay * 1000)
+	{
+		EnemyManager::shootTimer.Stop();
+		EnemyManager::shootTimer.Start();
+
+		int index = (std::rand() % EnemyManager::enemyCount);
+
+		//Object Pooling
+		for (Projectile* bomb : bombs)
+		{
+			if (!bomb->isActive)
+			{
+				bomb->isActive = true;
+				bomb->Move(EnemyManager::enemies[index]->mesh.rect.x, EnemyManager::enemies[index]->mesh.rect.y);
+				
+
+				break;
+			}
+		}
+	}
+}
+	
+void EnemyManager::CheckWallEvent()
+{
+	for (Enemy* enemy : EnemyManager::enemies)
+	{
+		if (enemy->IsNearWall())
+		{
+			for (Enemy* enemy : EnemyManager::enemies)
+			{
+				enemy->ReachWallEvent();
+			}
+			break;
+		}
+	}
+}

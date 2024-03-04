@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Window.h"
 
 class Projectile : public GameObject
 {
@@ -16,11 +17,10 @@ public:
 		if (!isActive)
 			return;
 
-		if (speed < 0 && mesh.rect.y > 0 || speed > 0 && mesh.rect.y < 0)
+		if (speed < 0 && mesh.rect.y > Window::SCREEN_HEIGHT || speed > 0 && mesh.rect.y < 0)
 			isActive = false;
 
 		Move(mesh.rect.x, mesh.rect.y - speed);
-
 	}
 
 };

@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "Player.h"
 
+class EnemyManager;
+
 class Enemy : public GameObject
 {
 	bool IsTimeToMove()
@@ -22,10 +24,11 @@ class Enemy : public GameObject
 	float moveDelay = 1.0f;
 	Time moveTimer{};
 	const float delayMultiplier = 0.8f;
+	EnemyManager* enemyManager;
 
 public:
 
-	Enemy(int xPos, int yPos, Player* p) : GameObject{ xPos, yPos, 50, 50 }
+	Enemy(int xPos, int yPos, Player* p, EnemyManager* em) : GameObject{ xPos, yPos, 50, 50 }
 	{
 		this->player = p;
 		moveTimer.Start();
@@ -33,6 +36,8 @@ public:
 		velX = 25;
 		velY = 25;
 		moveDelay = 1.0f;
+
+		enemyManager = em;
 	}
 
 
