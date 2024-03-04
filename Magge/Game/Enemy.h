@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
-#include "Player.h"
+#include "Time.h"
+#include "Projectile.h"
+#include "ProjectilePool.h"
 
 class EnemyManager;
 
@@ -24,13 +26,11 @@ class Enemy : public GameObject
 	Time moveTimer{};
 	const float delayMultiplier = 0.8f;
 	EnemyManager* enemyManager;
-	Player* player;
 
 public:
 
-	Enemy(int xPos, int yPos, Player* p, EnemyManager* em) : GameObject{ xPos, yPos, 50, 50 }
+	Enemy(int xPos, int yPos, EnemyManager* em) : GameObject{ xPos, yPos, 50, 50 }
 	{
-		this->player = p;
 		moveTimer.Start();
 
 		velX = 25;
@@ -46,17 +46,19 @@ public:
 		if(IsTimeToMove())
 			Move(mesh.rect.x + velX, mesh.rect.y);
 
-		for (Projectile* projectile : player->projectiles)
-		{
-			if (!projectile->isActive)
-				continue;
+		printf("%d", enemyManager->bombCount);
 
-			if (IsColliding(projectile->collider))
-			{
-				projectile->isActive = false;
-				isActive = false;
-			}
-		}
+		//for (Projectile* projectile : enemyManager->projectiles->pooledObjects)
+		//{
+		//	if (!projectile->isActive)
+		//		continue;
+
+		//	if (IsColliding(projectile->collider))
+		//	{
+		//		projectile->isActive = false;
+		//		isActive = false;
+		//	}
+		//}
 	}
 
 	

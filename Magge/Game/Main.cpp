@@ -12,7 +12,7 @@ and may not be redistributed without written permission.*/
 #include "Player.h"
 #include "Enemy.h"
 #include "EnemyManager.h"
-
+#include "Projectile.h"
 
 //Event handler
 SDL_Event e;
@@ -37,8 +37,12 @@ int main( int argc, char* args[] )
 
 	//Game Objects
 	std::vector<GameObject*> gameObjects;
-	Player player{&gameObjects};
-	EnemyManager enemyManager{&gameObjects, &player};
+
+	ProjectilePool* projectilePool = new ProjectilePool(20, 10, &gameObjects);
+	ProjectilePool* bombPool = new ProjectilePool(20, -7, &gameObjects);
+
+	Player player{&gameObjects, projectilePool, bombPool};
+	EnemyManager enemyManager{&gameObjects, projectilePool, bombPool};
 
 
 	bool quit = false;

@@ -1,7 +1,7 @@
 #include "EnemyManager.h"
 
 
-EnemyManager::EnemyManager(std::vector<GameObject*>* gameObjectList, Player* player)
+EnemyManager::EnemyManager(std::vector<GameObject*>* gameObjectList, ProjectilePool* projectiles, ProjectilePool* bombs)
 {
 	srand(SDL_GetTicks());
 	EnemyManager::shootTimer.Start();
@@ -12,18 +12,20 @@ EnemyManager::EnemyManager(std::vector<GameObject*>* gameObjectList, Player* pla
 	for (int y = 0; y < sizeof(EnemyManager::enemyRows) / sizeof(int); y++)
 		for (int i = 0; i < EnemyManager::enemyRows[y]; i++)
 		{
-			auto* enemy = new Enemy{ i * 80 + 100, y * 80 + 30, player, this};
+			auto* enemy = new Enemy{ i * 80 + 100, y * 80 + 30, this};
 			gameObjectList->push_back(enemy);
 			EnemyManager::enemies.push_back(enemy);
 		}
 
-	for (int i = 0; i < EnemyManager::bombCount; i++)
+	/*for (int i = 0; i < EnemyManager::bombCount; i++)
 	{
 		auto* projectile = new Projectile{ -7 };
 		projectile->isActive = false;
 		gameObjectList->push_back(projectile);
 		EnemyManager::bombs.push_back(projectile);
-	}
+	}*/
+	EnemyManager::bombs = bombs;
+	EnemyManager::projectiles = projectiles;
 
 }
 EnemyManager::~EnemyManager()
@@ -42,7 +44,7 @@ void EnemyManager::Update()
 		int index = (std::rand() % EnemyManager::enemyCount);
 
 		//Object Pooling
-		for (Projectile* bomb : bombs)
+		for (Projectile* bomb : bombs->pooledObjects)
 		{
 			if (!bomb->isActive)
 			{

@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "Projectile.h"
 #include <vector>
+#include "ProjectilePool.h"
 
 #include "Time.h"
 
@@ -12,29 +13,35 @@ class Player : public GameObject
 {
 	float shootCooldown;
 	Time shootTimer{};
-	int projectileCount = 20;
+	int projectileCount;
 	bool isShooting;
 
 public:
-	std::vector<Projectile*> projectiles;
+	//std::vector<Projectile*> projectiles;
+	ProjectilePool* projectiles;
+	ProjectilePool* bombs;
+
 	int hp;
 
-	Player(std::vector<GameObject*>* gameObjectList) : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50 }
+	Player(std::vector<GameObject*>* gameObjectList, ProjectilePool* projectiles, ProjectilePool* bombs) : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50 }
 	{
 		shootCooldown = 0.5f;
 		hp = 3;
 		isShooting = false;
+		projectileCount = projectiles->count;
 
 		gameObjectList->push_back(this);
 
+		this->projectiles = projectiles;
+		this->bombs = bombs;
 
-		for (int i = 0; i < projectileCount; i++)
+		/*for (int i = 0; i < projectileCount; i++)
 		{
 			auto* projectile = new Projectile{ 10 };
 			projectile->isActive = false;
 			gameObjectList->push_back(projectile);
 			projectiles.push_back(projectile);
-		}
+		}*/
 	}
 
 
@@ -60,7 +67,7 @@ public:
 		shootTimer.Start();
 
 		//Object Pooling
-		for (Projectile* projectile : projectiles)
+		for (Projectile* projectile : projectiles->pooledObjects)
 		{
 			if (!projectile->isActive)
 			{
@@ -97,7 +104,7 @@ public:
 		Move(mPosX, mPosY);
 
 
-		/*for (Projectile* bomb : enemyManager->bombs)
+		for (Projectile* bomb : bombs->pooledObjects)
 		{
 			if (!bomb->isActive)
 				continue;
@@ -108,7 +115,7 @@ public:
 				printf("%d\n", hp);
 				bomb->isActive = false;
 			}
-		}*/
+		}
 	}
 
 };
