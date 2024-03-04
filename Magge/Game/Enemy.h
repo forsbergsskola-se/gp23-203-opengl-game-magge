@@ -20,7 +20,6 @@ class Enemy : public GameObject
 
 		return false;
 	}
-	
 
 	float moveDelay = 1.0f;
 	Time moveTimer{};
@@ -46,7 +45,7 @@ public:
 		if(IsTimeToMove())
 			Move(mesh.rect.x + velX, mesh.rect.y);
 
-		printf("%d", enemyManager->bombCount);
+		//printf("%d", enemyManager->bombCount);
 
 		//for (Projectile* projectile : enemyManager->projectiles->pooledObjects)
 		//{

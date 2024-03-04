@@ -7,7 +7,9 @@ EnemyManager::EnemyManager(std::vector<GameObject*>* gameObjectList, ProjectileP
 	EnemyManager::shootTimer.Start();
 		
 	EnemyManager::shootDelay = (std::rand() % (EnemyManager::maxShootDelay - EnemyManager::minShootDelay) + EnemyManager::minShootDelay) * 0.01f;
-
+	
+	EnemyManager::bombs = bombs;
+	EnemyManager::projectiles = projectiles;
 
 	for (int y = 0; y < sizeof(EnemyManager::enemyRows) / sizeof(int); y++)
 		for (int i = 0; i < EnemyManager::enemyRows[y]; i++)
@@ -24,8 +26,7 @@ EnemyManager::EnemyManager(std::vector<GameObject*>* gameObjectList, ProjectileP
 		gameObjectList->push_back(projectile);
 		EnemyManager::bombs.push_back(projectile);
 	}*/
-	EnemyManager::bombs = bombs;
-	EnemyManager::projectiles = projectiles;
+	
 
 }
 EnemyManager::~EnemyManager()
