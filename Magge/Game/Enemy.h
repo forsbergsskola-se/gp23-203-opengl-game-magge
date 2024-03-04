@@ -4,6 +4,19 @@
 
 class Enemy : public GameObject
 {
+	bool IsTimeToMove()
+	{
+		if (moveTimer.GetTicks() >= moveDelay * 1000)
+		{
+			moveTimer.Stop();
+			moveTimer.Start();
+
+			return true;
+		}
+
+		return false;
+	}
+	
 public:
 	Player* player;
 
@@ -21,20 +34,11 @@ public:
 		moveDelay = 1.0f;
 	}
 
-	void CheckMove()
-	{
-		if (moveTimer.GetTicks() >= moveDelay * 1000)
-		{
-			moveTimer.Stop();
-			moveTimer.Start();
-
-			Move(mesh.rect.x + velX, mesh.rect.y);
-		}
-	}
 
 	virtual void Update() override
 	{
-		CheckMove();
+		if(IsTimeToMove())
+			Move(mesh.rect.x + velX, mesh.rect.y);
 
 		for (Projectile* projectile : player->projectiles)
 		{
@@ -49,15 +53,9 @@ public:
 		}
 	}
 
+	
 
-	void ReachWallEvent()
-	{
-		velX = -velX;
-		Move(mesh.rect.x, mesh.rect.y + velY);
-		moveDelay *= delayMultiplier;
-	}
-
-	bool IsNearWall()
+	bool IsNearWall() const
 	{
 		if (velX > 0 && mesh.rect.x >= Window::SCREEN_WIDTH - mesh.rect.w - 20)
 		{
@@ -72,5 +70,23 @@ public:
 
 	}
 
+	void ReachWallEvent()
+	{
+		if (!IsTimeToMove())
+			return;
+
+		velX = -velX;
+
+		Move(mesh.rect.x, mesh.rect.y + velY);
+		moveDelay *= delayMultiplier;
+
+		moveTimer.Stop();
+		moveTimer.Start();
+	}
+
+	void DropBomb()
+	{
+
+	}
 };
 

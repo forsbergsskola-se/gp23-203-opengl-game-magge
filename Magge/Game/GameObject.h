@@ -26,6 +26,9 @@ public:
 
 		isActive = true;
 	}
+	~GameObject()
+	{
+	}
 
 	void Move(int posX, int posY)
 	{

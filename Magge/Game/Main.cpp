@@ -5,12 +5,14 @@ and may not be redistributed without written permission.*/
 #include <SDL.h>
 #include <stdio.h>
 #include "Window.h"
-#include "Player.h"
-#include "Enemy.h"
+#include <vector>
 #include "Input.h"
 #include "Time.h"
-#include <vector>
+#include "GameObject.h"
+#include "Player.h"
 #include "Enemy.h"
+#include "EnemyManager.h"
+
 
 //Event handler
 SDL_Event e;
@@ -19,23 +21,22 @@ const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 
 int enemyCount[4]{10, 10, 10, 10};
-int projectilePoolCount = 20;
 
 int main( int argc, char* args[] )
 {
 	Window window{};
-
 	Texture background{ "Resources/Space.png", window.renderer };
 
+	//Time
 	Time time{};
 	Time capTimer{};
 	time.Start();
 	int countedFrames = 0;
+
+	//Game Objects
 	Player player{};
-
-
+	EnemyManager enemyManager{};
 	std::vector<GameObject*> gameObjects;
-	std::vector<Enemy*> enemies;
 
 	gameObjects.push_back(&player);
 	for(int y = 0; y < sizeof(enemyCount) / sizeof(int); y++)
@@ -43,15 +44,23 @@ int main( int argc, char* args[] )
 		{
 			auto* enemy = new Enemy{ i * 80 + 100, y * 80 + 30, &player};
 			gameObjects.push_back(enemy);
-			enemies.push_back(enemy);
+			enemyManager.enemies.push_back(enemy);
 		}
 
-	for (int i = 0; i < projectilePoolCount; i++)
+	for (int i = 0; i < player.projectileCount; i++)
 	{
-		auto* projectile = new Projectile{};
+		auto* projectile = new Projectile{10};
 		projectile->isActive = false;
 		gameObjects.push_back(projectile);
 		player.projectiles.push_back(projectile);
+	}
+
+	for (int i = 0; i < enemyManager.bombCount; i++)
+	{
+		auto* projectile = new Projectile{ 10 };
+		projectile->isActive = false;
+		gameObjects.push_back(projectile);
+		enemyManager.bombs.push_back(projectile);
 	}
 
 	bool quit = false;
@@ -81,18 +90,8 @@ int main( int argc, char* args[] )
 				quit = true;
 
 		}
-		//player.Update();
-		for (Enemy* enemy : enemies)
-		{
-			if (enemy->IsNearWall())
-			{
-				for (Enemy* enemy : enemies)
-				{
-					enemy->ReachWallEvent();
-				}
-				break;
-			}
-		}
+
+		enemyManager.Update();
 		for (GameObject* go : gameObjects)
 		{
 			if(go->isActive)

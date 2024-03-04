@@ -14,6 +14,8 @@ public:
 	std::vector<Projectile*> projectiles;
 	float shootCooldown;
 	Time shootTimer{};
+	int projectileCount = 20;
+
 
 	Player() : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50 }
 	{
