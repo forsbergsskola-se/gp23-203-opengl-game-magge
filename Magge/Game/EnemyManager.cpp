@@ -19,7 +19,7 @@ EnemyManager::EnemyManager(std::vector<GameObject*>* gameObjectList, Player* pla
 
 	for (int i = 0; i < EnemyManager::bombCount; i++)
 	{
-		auto* projectile = new Projectile{ -10 };
+		auto* projectile = new Projectile{ -7 };
 		projectile->isActive = false;
 		gameObjectList->push_back(projectile);
 		EnemyManager::bombs.push_back(projectile);

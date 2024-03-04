@@ -10,8 +10,8 @@
 
 class EnemyManager
 {
-	const int minShootDelay = 20;
-	const int maxShootDelay = 100;
+	const int minShootDelay = 80;
+	const int maxShootDelay = 160;
 	float shootDelay;
 	Time shootTimer{};
 

@@ -20,6 +20,9 @@ SDL_Event e;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 
+class EnemyManager;
+class Player;
+
 
 int main( int argc, char* args[] )
 {
@@ -55,13 +58,11 @@ int main( int argc, char* args[] )
 		//Handle events on queue
 		while (SDL_PollEvent(&e) != 0)
 		{
-			Key key = Input::KeyPressed(e.key.keysym.sym);
-
 			const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 			player.PlayerInput(currentKeyStates);
 
 			//User requests quit
-			if (e.type == SDL_QUIT || key == Key::Escape)
+			if (e.type == SDL_QUIT || currentKeyStates[SDL_SCANCODE_ESCAPE])
 				quit = true;
 
 		}

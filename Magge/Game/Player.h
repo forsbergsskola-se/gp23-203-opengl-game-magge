@@ -5,21 +5,25 @@
 #include "GameObject.h"
 #include "Projectile.h"
 #include <vector>
+
 #include "Time.h"
 
 class Player : public GameObject
 {
-public:
-
-	std::vector<Projectile*> projectiles;
 	float shootCooldown;
 	Time shootTimer{};
 	int projectileCount = 20;
+	bool isShooting;
 
+public:
+	std::vector<Projectile*> projectiles;
+	int hp;
 
 	Player(std::vector<GameObject*>* gameObjectList) : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50 }
 	{
 		shootCooldown = 0.5f;
+		hp = 3;
+		isShooting = false;
 
 		gameObjectList->push_back(this);
 
@@ -36,61 +40,48 @@ public:
 
 	void PlayerInput(const Uint8* currentKeyStates)
 	{
+		isShooting = currentKeyStates[SDL_SCANCODE_SPACE];
 
-
-		if (currentKeyStates[SDL_SCANCODE_SPACE])
-		{
-
-			if (!shootTimer.IsStarted() || shootTimer.GetTicks() >= shootCooldown * 1000)
-			{
-				shootTimer.Stop();
-				shootTimer.Start();
-
-				//Object Pooling
-				for (Projectile* projectile : projectiles)
-				{
-					if (!projectile->isActive)
-					{
-						projectile->isActive = true;
-						projectile->Move(mesh.rect.x, mesh.rect.y);
-						break;
-					}
-				}
-			}
-
-			
-		}
 
 		if (currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_RIGHT])
-		{
 			velX = 0;
-			return;
-		}
-
-		if (currentKeyStates[SDL_SCANCODE_LEFT])
-		{
-
+		else if (currentKeyStates[SDL_SCANCODE_LEFT])
 			velX = -moveSpeed;
-			return;
-		}
-		if (currentKeyStates[SDL_SCANCODE_RIGHT])
-		{
+		else if (currentKeyStates[SDL_SCANCODE_RIGHT])
 			velX = moveSpeed;
-			return;
-		}
-
-
-		velX = 0;
+		else
+			velX = 0;
 	}
 
 
-	
+	void Shoot()
+	{
+		shootTimer.Stop();
+		shootTimer.Start();
+
+		//Object Pooling
+		for (Projectile* projectile : projectiles)
+		{
+			if (!projectile->isActive)
+			{
+				projectile->isActive = true;
+				projectile->Move(mesh.rect.x, mesh.rect.y);
+				break;
+			}
+		}
+	}
+
+
 
 	virtual void Update() override
 	{
+		if (isShooting)
+			if (!shootTimer.IsStarted() || shootTimer.GetTicks() >= shootCooldown * 1000)
+				Shoot();
+
+
 		int mPosX = mesh.rect.x + velX;
 		int mPosY = mesh.rect.y + velY;
-		//printf("%d\n", mPosX);
 
 		if ((mPosX < 0) || (mPosX + mesh.rect.w > Window::SCREEN_WIDTH))
 		{
@@ -104,6 +95,20 @@ public:
 			mPosY -= velY;
 		}
 		Move(mPosX, mPosY);
+
+
+		/*for (Projectile* bomb : enemyManager->bombs)
+		{
+			if (!bomb->isActive)
+				continue;
+
+			if (IsColliding(bomb->collider))
+			{
+				hp--;
+				printf("%d\n", hp);
+				bomb->isActive = false;
+			}
+		}*/
 	}
 
 };

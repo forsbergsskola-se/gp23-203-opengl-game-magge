@@ -19,12 +19,12 @@ class Enemy : public GameObject
 		return false;
 	}
 	
-	Player* player;
 
 	float moveDelay = 1.0f;
 	Time moveTimer{};
 	const float delayMultiplier = 0.8f;
 	EnemyManager* enemyManager;
+	Player* player;
 
 public:
 
