@@ -7,12 +7,12 @@
 class Texture
 {
 	SDL_Texture* texture;
-	SDL_Rect rect;
+	//SDL_Rect rect;
 public:
 
-	Texture(std::string path, SDL_Rect rect)
+	Texture(std::string path, int w, int h)
 	{
-		this->rect = rect;
+		//this->rect = rect;
 
 		//Load image at specified path
 		SDL_Surface* loadedSurface = IMG_Load(path.c_str());
@@ -34,7 +34,7 @@ public:
 			SDL_FreeSurface(loadedSurface);
 		}
 
-		SDL_QueryTexture(texture, nullptr, nullptr, &rect.w, &rect.h);
+		SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
 	}
 
 

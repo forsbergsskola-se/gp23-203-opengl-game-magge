@@ -15,7 +15,7 @@ public:
 	int velX;
 	int velY;
 
-	GameObject(int posX, int posY, int width, int height, std::string path) : mesh{posX, posY, width, height}, texture{ path, mesh.rect }
+	GameObject(int posX, int posY, int width, int height, std::string path) : mesh{posX, posY, width, height}, texture{ path, mesh.rect.w, mesh.rect.h }
 	{
 		velX = 0;
 		velY = 0;

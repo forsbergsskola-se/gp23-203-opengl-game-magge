@@ -1,6 +1,7 @@
 #include "EnemyManager.h"
 #include "Enemy.h"
 
+
 EnemyManager::EnemyManager(std::vector<GameObject*>* gameObjectList, ProjectilePool* projectiles, ProjectilePool* bombs)
 {
 	srand(SDL_GetTicks());
@@ -11,7 +12,10 @@ EnemyManager::EnemyManager(std::vector<GameObject*>* gameObjectList, ProjectileP
 	for (int y = 0; y < sizeof(EnemyManager::enemyRows) / sizeof(int); y++)
 		for (int i = 0; i < EnemyManager::enemyRows[y]; i++)
 		{
-			auto* enemy = new Enemy{ i * 80 + 100, y * 80 + 30, projectiles, this};
+			int spriteIndex = std::rand() % sizeof(EnemyManager::enemySprites) / sizeof(EnemyManager::enemySprites[0]);
+			std::string enemySpritePath = EnemyManager::enemySprites[spriteIndex];
+
+			auto* enemy = new Enemy{ i * 80 + 100, y * 80 + 30, projectiles, this, enemySpritePath};
 			gameObjectList->push_back(enemy);
 			EnemyManager::enemies.push_back(enemy);
 		}

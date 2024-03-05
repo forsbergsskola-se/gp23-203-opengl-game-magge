@@ -29,7 +29,7 @@ class Enemy : public GameObject
 	EnemyManager* enemyManager;
 public:
 
-	Enemy(int xPos, int yPos, ProjectilePool* projectiles, EnemyManager* em) : GameObject{ xPos, yPos, 50, 50, "Resources/enemy1.png" }
+	Enemy(int xPos, int yPos, ProjectilePool* projectiles, EnemyManager* em, std::string path) : GameObject{ xPos, yPos, 50, 50, path }
 	{
 		moveTimer.Start();
 
@@ -39,6 +39,7 @@ public:
 
 		this->projectiles = projectiles;
 		enemyManager = em;
+
 	}
 
 

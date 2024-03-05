@@ -23,7 +23,7 @@ int main( int argc, char* args[] )
 {
 	Window window{};
 	SDL_Rect* rect = new SDL_Rect{ 0, 0, Window::SCREEN_WIDTH, Window::SCREEN_HEIGHT };
-	Texture background{"Resources/Space.png", *rect};
+	Texture background{"Resources/Space.png", Window::SCREEN_WIDTH, Window::SCREEN_HEIGHT };
 
 	//Time
 	Time time{};
@@ -34,8 +34,8 @@ int main( int argc, char* args[] )
 	//Game Objects
 	std::vector<GameObject*> gameObjects;
 
-	ProjectilePool* projectilePool = new ProjectilePool(20, 10, &gameObjects);
-	ProjectilePool* bombPool = new ProjectilePool(20, -7, &gameObjects);
+	ProjectilePool* projectilePool = new ProjectilePool(20, 10, "Resources/projectile.png", &gameObjects);
+	ProjectilePool* bombPool = new ProjectilePool(20, -7, "Resources/bomb.png", &gameObjects);
 
 	Player player{&gameObjects, projectilePool, bombPool};
 	EnemyManager enemyManager{&gameObjects, projectilePool, bombPool};

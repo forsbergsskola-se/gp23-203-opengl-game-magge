@@ -34,14 +34,6 @@ public:
 
 		this->projectiles = projectiles;
 		this->bombs = bombs;
-
-		/*for (int i = 0; i < projectileCount; i++)
-		{
-			auto* projectile = new Projectile{ 10 };
-			projectile->isActive = false;
-			gameObjectList->push_back(projectile);
-			projectiles.push_back(projectile);
-		}*/
 	}
 
 
