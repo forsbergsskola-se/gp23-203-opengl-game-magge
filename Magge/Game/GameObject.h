@@ -1,5 +1,6 @@
 #pragma once
 #include "Mesh.h"
+#include "Texture.h"
 
 class GameObject
 {
@@ -7,13 +8,14 @@ public:
 	bool isActive;
 
 	Mesh mesh;
+	Texture texture;
 	SDL_Rect collider;
 	int moveSpeed = 10;
 
 	int velX;
 	int velY;
 
-	GameObject(int posX, int posY, int width, int height) : mesh{posX, posY, width, height}
+	GameObject(int posX, int posY, int width, int height, std::string path) : mesh{posX, posY, width, height}, texture{ path, mesh.rect }
 	{
 		velX = 0;
 		velY = 0;
@@ -25,6 +27,7 @@ public:
 		collider.h = height;
 
 		isActive = true;
+		
 	}
 	~GameObject()
 	{
@@ -74,8 +77,10 @@ public:
 
 	void Render()
 	{
-		if(isActive)
-			mesh.Render();
+		if (isActive)
+		{
+			texture.Render(mesh.rect);
+		}
 	}
 };
 
