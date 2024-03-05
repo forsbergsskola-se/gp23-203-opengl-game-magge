@@ -10,7 +10,7 @@ Our assignment was to create a simple game using SDL and further develop our ski
 
 
 ## Troubles we encountered
-* Weird movement (Solved by capping frame rate using a timer).
+* Weird player and monster movement (Solved by capping frame rate using a timer).
 * Circular dependencies (Solved by forward declarations and file management).
 * Include-explosions (Move definitions to .cpp file)
 
@@ -28,8 +28,8 @@ Pick one..
 
 
 ## STD Classes we used
-*  Using std::Vector for all pools mentioned above. 
-*  std::String to load paths for .png textures
+*  Using std::vector for all pools mentioned above. 
+*  std::string to load paths for .png textures and store in an array to randomise monster texture.
 
 
 ## Conclusion
