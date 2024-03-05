@@ -45,43 +45,51 @@ int main( int argc, char* args[] )
 
 	while (!quit)
 	{
-		window.Clear();
-		capTimer.Start();
+		while (player.isActive)
+		{
+			window.Clear();
+			capTimer.Start();
+
+			background.Render(*rect);
+
+			for (GameObject* go : gameObjects)
+			{
+				go->Render();
+			}
+
+			//Handle events on queue
+			while (SDL_PollEvent(&e) != 0)
+			{
+				const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+				player.PlayerInput(currentKeyStates);
+
+				//User requests quit
+				if (e.type == SDL_QUIT || currentKeyStates[SDL_SCANCODE_ESCAPE])
+					quit = true;
+
+			}
+
+			enemyManager.Update();
+			for (GameObject* go : gameObjects)
+			{
+				if(go->isActive)
+					go->Update();
+			}
+
+			//Update screen
+			SDL_RenderPresent(window.renderer);
+			++countedFrames;
+			capTimer.CapFPS(SCREEN_TICK_PER_FRAME);
+		}
 
 		background.Render(*rect);
-
-		for (GameObject* go : gameObjects)
-		{
-			go->Render();
-		}
-
-		//Handle events on queue
-		while (SDL_PollEvent(&e) != 0)
-		{
-			const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-			player.PlayerInput(currentKeyStates);
-
-			//User requests quit
-			if (e.type == SDL_QUIT || currentKeyStates[SDL_SCANCODE_ESCAPE])
-				quit = true;
-
-		}
-
-		enemyManager.Update();
-		for (GameObject* go : gameObjects)
-		{
-			if(go->isActive)
-				go->Update();
-
-		}
 
 
 		//Update screen
 		SDL_RenderPresent(window.renderer);
-
-		++countedFrames;
-		capTimer.CapFPS(SCREEN_TICK_PER_FRAME);
 	}
+
+
 
 	window.Close();
 
