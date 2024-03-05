@@ -41,12 +41,13 @@ public:
 		SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
 	}
 
-	Texture(std::string path, std::string textureText, int size, Color* c)
+	Texture(std::string textureText, Color* c)
 	{
 		TTF_Init();
 
+
 		//Set Font
-		font = TTF_OpenFont(path.c_str(), size);
+		font = TTF_OpenFont("Resources/pixel.ttf", 10);
 		color = c;
 
 		//Render text surface

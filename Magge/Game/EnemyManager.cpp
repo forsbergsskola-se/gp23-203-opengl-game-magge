@@ -16,7 +16,7 @@ EnemyManager::EnemyManager(std::vector<GameObject*>* gameObjectList, ProjectileP
 			std::string enemySpritePath = EnemyManager::enemySprites[spriteIndex];
 
 
-			auto* enemy = new Enemy{ i * 100 + 100, y * 100 + 30, projectiles, this, enemySpritePath};
+			auto* enemy = new Enemy{ i * 100 + 100, y * 100 + 80, projectiles, this, enemySpritePath};
 			gameObjectList->push_back(enemy);
 			EnemyManager::enemies.push_back(enemy);
 		}
