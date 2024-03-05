@@ -32,82 +32,121 @@ int main( int argc, char* args[] )
 	time.Start();
 	int countedFrames = 0;
 
-	//Game Objects
-	std::vector<GameObject*> gameObjects;
-
-	ProjectilePool* projectilePool = new ProjectilePool(20, 10, "Resources/projectile.png", 15, 45, true, &gameObjects);
-	ProjectilePool* bombPool = new ProjectilePool(20, -7, "Resources/bomb.png", 25, 25, false, &gameObjects);
-
-	Player player{&gameObjects, projectilePool, bombPool};
-	EnemyManager enemyManager{&gameObjects, projectilePool, bombPool};
+	
 
 	//Background and Text
 	Texture background{ "Resources/Space.png", Window::SCREEN_WIDTH, Window::SCREEN_HEIGHT, new Color{255, 255, 255} };
 	Texture healthIcon{ "Resources/spaceship.png",  40, 40, new Color{255, 255, 255} };
 	Texture gameOverText{ "GAME OVER", new Color{255, 255, 255} };
 	Texture winText{ "YOU WIN!", new Color{255, 255, 255} };
+	Texture restartText{ "Press R To Restart", new Color{255, 255, 255} };
 
+
+	Texture introText{ "Press Space To Play", new Color{255, 255, 255} };
 
 	bool quit = false;
+	bool restart = false;
+	bool gameStarted = false;
 
 	while (!quit)
 	{
-		window.Clear();
-		capTimer.Start();
+		//Game Objects
+		std::vector<GameObject*> gameObjects;
 
-		background.Render(*rect);
-		Texture scoreText{ "SCORE: " + std::to_string(enemyManager.score), new Color{255, 255, 255} };
-		scoreText.Render(SDL_Rect{ 150, 0, 300, 50 });
+		ProjectilePool* projectilePool = new ProjectilePool(20, 10, "Resources/projectile.png", 15, 45, true, &gameObjects);
+		ProjectilePool* bombPool = new ProjectilePool(20, -7, "Resources/bomb.png", 25, 25, false, &gameObjects);
+
+		Player player{ &gameObjects, projectilePool, bombPool };
+		EnemyManager enemyManager{ &gameObjects, projectilePool, bombPool };
+
+
+		while(!gameStarted && !quit)
+		{ 
+			window.Clear();
+			introText.Render(SDL_Rect{ Window::SCREEN_WIDTH / 2 - (1000 / 2), Window::SCREEN_HEIGHT / 2 - (100 / 2), 1000, 100 });
+
+			while (SDL_PollEvent(&e) != 0)
+			{
+				const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+				player.PlayerInput(currentKeyStates);
+
+				//User requests quit
+				if (e.type == SDL_QUIT || currentKeyStates[SDL_SCANCODE_ESCAPE])
+					quit = true;
+				else if (currentKeyStates[SDL_SCANCODE_SPACE])
+					gameStarted = true;
+			}
+			SDL_RenderPresent(window.renderer);
+		}
+
+
+		while (!quit && !restart)
+		{
+			window.Clear();
+			capTimer.Start();
+
+			background.Render(*rect);
+			Texture scoreText{ "SCORE: " + std::to_string(enemyManager.score), new Color{255, 255, 255} };
+			scoreText.Render(SDL_Rect{ 150, 0, 300, 50 });
 		
 
-		//Handle events on queue
-		while (SDL_PollEvent(&e) != 0)
-		{
-			const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-			player.PlayerInput(currentKeyStates);
-
-			//User requests quit
-			if (e.type == SDL_QUIT || currentKeyStates[SDL_SCANCODE_ESCAPE] )
-				quit = true;
-		}
-
-		if (enemyManager.enemyCount <= 0)
-		{
-			winText.Render(SDL_Rect{ Window::SCREEN_WIDTH / 2 - (1000 / 2), Window::SCREEN_HEIGHT / 2 - (250 / 2), 1000, 250 });
-		}
-		else if (player.isActive && !enemyManager.hasReachedBottom)
-		{
-			for (int i = 0; i < player.hp; i++)
-				healthIcon.Render(SDL_Rect{ Window::SCREEN_WIDTH - 150 - i * 80, 20, 40, 40});
-
-			for (GameObject* go : gameObjects)
-				go->Render();
-
-			if (player.isTakingDamage)
+			//Handle events on queue
+			while (SDL_PollEvent(&e) != 0)
 			{
-				if (player.damageTimer.GetTicks() >= player.damageDuration * 1000)
-					player.isTakingDamage = false;
+				const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+				player.PlayerInput(currentKeyStates);
+
+				//User requests quit
+				if (e.type == SDL_QUIT || currentKeyStates[SDL_SCANCODE_ESCAPE] )
+					quit = true;
+
+				//User requests quit
+				if (currentKeyStates[SDL_SCANCODE_R])
+					restart = true;
+			}
+
+			if (enemyManager.enemyCount <= 0)
+			{
+				winText.Render(SDL_Rect{ Window::SCREEN_WIDTH / 2 - (1000 / 2), Window::SCREEN_HEIGHT / 2 - (250 / 2), 1000, 250 });
+				restartText.Render(SDL_Rect{ Window::SCREEN_WIDTH / 2 - (1000 / 2), Window::SCREEN_HEIGHT / 2 - (250 / 2) + 200, 1000, 120});
+			}
+			else if (player.isActive && !enemyManager.hasReachedBottom)
+			{
+				for (int i = 0; i < player.hp; i++)
+					healthIcon.Render(SDL_Rect{ Window::SCREEN_WIDTH - 150 - i * 80, 20, 40, 40});
+
+				for (GameObject* go : gameObjects)
+					go->Render();
+
+				if (player.isTakingDamage)
+				{
+					if (player.damageTimer.GetTicks() >= player.damageDuration * 1000)
+						player.isTakingDamage = false;
+				}
+				else
+				{
+					enemyManager.Update();
+					for (GameObject* go : gameObjects)
+					{
+						if(go->isActive)
+							go->Update();
+					}
+				}
 			}
 			else
 			{
-				enemyManager.Update();
-				for (GameObject* go : gameObjects)
-				{
-					if(go->isActive)
-						go->Update();
-				}
+				gameOverText.Render(SDL_Rect{ Window::SCREEN_WIDTH / 2 - (1000 / 2), Window::SCREEN_HEIGHT / 2 - (250 / 2), 1000, 250 });
+				restartText.Render(SDL_Rect{ Window::SCREEN_WIDTH / 2 - (1000 / 2), Window::SCREEN_HEIGHT / 2 - (250 / 2) + 200, 1000, 120 });
 			}
+
+			++countedFrames;
+			capTimer.CapFPS(SCREEN_TICK_PER_FRAME);
+			//Update screen
+			SDL_RenderPresent(window.renderer);
 		}
-		else
-			gameOverText.Render(SDL_Rect{ Window::SCREEN_WIDTH / 2 - (1000 / 2), Window::SCREEN_HEIGHT / 2 - (250 / 2), 1000, 250 });
-
-
-		++countedFrames;
-		capTimer.CapFPS(SCREEN_TICK_PER_FRAME);
-		//Update screen
-		SDL_RenderPresent(window.renderer);
+		gameStarted = false;
+		restart = false;
 	}
-
 
 
 	window.Close();
