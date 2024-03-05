@@ -1,18 +1,11 @@
-/*This source code copyrighted by Lazy Foo' Productions 2004-2024
-and may not be redistributed without written permission.*/
-
 //Using SDL and standard IO
 #include <SDL.h>
 #include <stdio.h>
 #include "Window.h"
 #include <vector>
-#include "Input.h"
 #include "Time.h"
-#include "GameObject.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "EnemyManager.h"
-#include "Projectile.h"
 
 //Event handler
 SDL_Event e;
@@ -22,7 +15,9 @@ const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 
 class EnemyManager;
 class Player;
-
+class Enemy;
+class Projectile;
+class GameObject;
 
 int main( int argc, char* args[] )
 {

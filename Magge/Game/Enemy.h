@@ -39,7 +39,6 @@ public:
 
 		this->projectiles = projectiles;
 		enemyManager = em;
-		printf("%d", enemyManager->bombCount);
 	}
 
 
