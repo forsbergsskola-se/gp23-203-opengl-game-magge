@@ -1,4 +1,3 @@
-//Using SDL and standard IO
 #include <SDL.h>
 #include <stdio.h>
 #include "Window.h"
@@ -6,6 +5,7 @@
 #include "Time.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Texture.h"
 
 //Event handler
 SDL_Event e;
@@ -22,8 +22,7 @@ class GameObject;
 int main( int argc, char* args[] )
 {
 	Window window{};
-	//SDL_Rect* windowRect = new SDL_Rect{ 0, 0, Window::SCREEN_WIDTH, Window::SCREEN_HEIGHT };
-	Texture background{ "Resources/Space.png", window.renderer};
+	Texture background{"Resources/Space.png"};
 
 	//Time
 	Time time{};

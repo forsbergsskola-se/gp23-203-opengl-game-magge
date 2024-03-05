@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <SDL_image.h>
 #include "String"
-#include "Texture.h"
 
 
 class Window

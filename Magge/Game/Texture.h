@@ -1,20 +1,19 @@
 #pragma once
-#include "Window.h"
 #include <SDL_image.h>
 #include "String"
-
+#include <SDL.h>
+#include "Window.h"
 
 class Texture
 {
-	SDL_Renderer* renderer;
 	static SDL_Texture* texture;
 	SDL_Rect* rect;
 public:
 
-	Texture(std::string path, SDL_Renderer* renderer, SDL_Rect& rect)
+	Texture(std::string path, SDL_Rect& rect)
 	{
-		this->renderer = renderer;
 		this->rect = &rect;
+
 		//Load image at specified path
 		SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 		if (loadedSurface == NULL)
@@ -24,7 +23,7 @@ public:
 		else
 		{
 			//Create texture from surface pixels
-			texture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+			texture = SDL_CreateTextureFromSurface(Window::renderer, loadedSurface);
 			if (texture == NULL)
 			{
 				printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
@@ -38,9 +37,9 @@ public:
 	}
 
 
-	Texture(std::string path, SDL_Renderer* renderer)
+	Texture(std::string path)
 	{
-		this->renderer = renderer;
+
 		this->rect = nullptr;
 		//Load image at specified path
 		SDL_Surface* loadedSurface = IMG_Load(path.c_str());
@@ -51,7 +50,7 @@ public:
 		else
 		{
 			//Create texture from surface pixels
-			texture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+			texture = SDL_CreateTextureFromSurface(Window::renderer, loadedSurface);
 			if (texture == NULL)
 			{
 				printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
@@ -77,10 +76,10 @@ public:
 	void Render()
 	{
 		//Clear screen
-		SDL_RenderClear(renderer);
+		SDL_RenderClear(Window::renderer);
 
 		//Render texture to screen
-		SDL_RenderCopy(renderer, texture, NULL, rect != nullptr? rect : NULL);
+		SDL_RenderCopy(Window::renderer, texture, NULL, rect != nullptr? rect : NULL);
 	}
 
 };
