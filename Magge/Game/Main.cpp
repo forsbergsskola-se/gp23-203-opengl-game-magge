@@ -22,7 +22,8 @@ class GameObject;
 int main( int argc, char* args[] )
 {
 	Window window{};
-	Texture background{ "Resources/Space.png", window.renderer };
+	//SDL_Rect* windowRect = new SDL_Rect{ 0, 0, Window::SCREEN_WIDTH, Window::SCREEN_HEIGHT };
+	Texture background{ "Resources/Space.png", window.renderer};
 
 	//Time
 	Time time{};
