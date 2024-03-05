@@ -18,7 +18,6 @@ class Player : public GameObject
 	bool isShooting;
 
 public:
-	//std::vector<Projectile*> projectiles;
 	ProjectilePool* projectiles;
 	ProjectilePool* bombs;
 
@@ -105,11 +104,14 @@ public:
 			if (IsColliding(bomb->collider))
 			{
 				hp--;
-				printf("%d\n", hp);
 				bomb->isActive = false;
+
+				if(hp <= 0)
+					isActive = false;
 			}
 		}
 	}
+
 
 };
 
