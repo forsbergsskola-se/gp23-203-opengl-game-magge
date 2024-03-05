@@ -24,7 +24,7 @@ int main( int argc, char* args[] )
 	Window window{};
 	SDL_Rect* rect = new SDL_Rect{ 0, 0, Window::SCREEN_WIDTH, Window::SCREEN_HEIGHT };
 	Texture background{ "Resources/Space.png", Window::SCREEN_WIDTH, Window::SCREEN_HEIGHT, new Color{255, 255, 255} };
-
+	Texture scoreText{"Resources/lazy.ttf", "SCORE!", 80, new Color{255, 0, 255} };
 	//Time
 	Time time{};
 	Time capTimer{};
@@ -45,12 +45,13 @@ int main( int argc, char* args[] )
 
 	while (!quit)
 	{
-		while (player.isActive)
+		while (player.isActive && !quit)
 		{
 			window.Clear();
 			capTimer.Start();
 
 			background.Render(*rect);
+			scoreText.Render(SDL_Rect{100, 800, 300, 50});
 
 			for (GameObject* go : gameObjects)
 			{
@@ -81,9 +82,7 @@ int main( int argc, char* args[] )
 			++countedFrames;
 			capTimer.CapFPS(SCREEN_TICK_PER_FRAME);
 		}
-
 		background.Render(*rect);
-
 
 		//Update screen
 		SDL_RenderPresent(window.renderer);

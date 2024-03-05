@@ -4,11 +4,14 @@
 #include <SDL.h>
 #include "Window.h"
 #include "Color.h"
+#include <SDL_ttf.h>
 
 class Texture
 {
 	SDL_Texture* texture;
 	Color* color;
+
+	TTF_Font* font;
 public:
 
 	Texture(std::string path, int w, int h, Color* c)
@@ -36,6 +39,40 @@ public:
 		}
 
 		SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
+	}
+
+	Texture(std::string path, std::string textureText, int size, Color* c)
+	{
+		TTF_Init();
+
+		//Set Font
+		font = TTF_OpenFont(path.c_str(), size);
+		color = c;
+
+		//Render text surface
+		SDL_Surface* textSurface = TTF_RenderText_Solid(font, textureText.c_str(), SDL_Color{ c->r, c->g, c->b });
+		if (textSurface == NULL)
+		{
+			printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+		}
+		else
+		{
+			//Create texture from surface pixels
+			texture = SDL_CreateTextureFromSurface(Window::renderer, textSurface);
+			if (texture == NULL)
+			{
+				printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+			}
+			else
+			{
+				////Get image dimensions
+				//mWidth = textSurface->w;
+				//mHeight = textSurface->h;
+			}
+
+			//Get rid of old surface
+			SDL_FreeSurface(textSurface);
+		}
 	}
 
 
