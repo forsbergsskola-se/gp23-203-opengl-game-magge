@@ -25,7 +25,7 @@ class Enemy : public GameObject
 
 	float moveDelay = 1.0f;
 	Time moveTimer{};
-	const float delayMultiplier = 0.85f;
+	const float delayMultiplier = 0.8f;
 	ProjectilePool* projectiles;
 	EnemyManager* enemyManager;
 public:
@@ -35,7 +35,7 @@ public:
 		moveTimer.Start();
 
 		velX = 35;
-		velY = 35;
+		velY = 65;
 		moveDelay = 1.0f;
 
 		this->projectiles = projectiles;
@@ -92,6 +92,14 @@ public:
 
 		moveTimer.Stop();
 		moveTimer.Start();
+	}
+
+	bool ReachBottomEvent()
+	{
+		if (mesh.rect.y > Window::SCREEN_HEIGHT - 170)
+			return true;
+
+		return false;
 	}
 
 	

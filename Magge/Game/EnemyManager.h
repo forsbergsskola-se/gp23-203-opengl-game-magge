@@ -20,6 +20,8 @@ class EnemyManager
 	Time shootTimer{};
 
 	void CheckWallEvent();
+	bool CheckBottomEvent();
+
 	ProjectilePool* bombs;
 	std::string enemySprites[10]{	"Resources/enemy1.png", "Resources/enemy2.png", "Resources/enemy3.png",
 									"Resources/enemy4.png", "Resources/enemy5.png", "Resources/enemy6.png",
@@ -27,6 +29,8 @@ class EnemyManager
 									"Resources/enemy10.png"};
 public:
 	int score = 0;
+	bool hasReachedBottom;
+	
 	//ProjectilePool* projectiles;
 	std::vector<Enemy*> enemies;
 	int enemyRows[5]{ 14, 14, 14, 14, 14};
@@ -39,4 +43,5 @@ public:
 	void Update();
 
 	void OnEnemyDeath();
+
 };

@@ -75,11 +75,16 @@ void EnemyManager::CheckWallEvent()
 {
 	for (Enemy* enemy : EnemyManager::enemies)
 	{
-		if (enemy->IsNearWall())
+		if (enemy->isActive && enemy->IsNearWall())
 		{
 			for (Enemy* enemy : EnemyManager::enemies)
 			{
 				enemy->ReachWallEvent();
+				if (enemy->ReachBottomEvent())
+				{
+					hasReachedBottom = true;
+					break;
+				}
 			}
 			EnemyManager::minShootDelay *= EnemyManager::delayMultiplier;
 			EnemyManager::maxShootDelay *= EnemyManager::delayMultiplier;

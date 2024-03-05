@@ -75,7 +75,7 @@ int main( int argc, char* args[] )
 		{
 			winText.Render(SDL_Rect{ Window::SCREEN_WIDTH / 2 - (1000 / 2), Window::SCREEN_HEIGHT / 2 - (250 / 2), 1000, 250 });
 		}
-		else if (player.isActive)
+		else if (player.isActive && !enemyManager.hasReachedBottom)
 		{
 			for (int i = 0; i < player.hp; i++)
 				healthIcon.Render(SDL_Rect{ Window::SCREEN_WIDTH - 150 - i * 80, 20, 40, 40});
@@ -98,7 +98,7 @@ int main( int argc, char* args[] )
 				}
 			}
 		}
-		else if(!player.isActive)
+		else
 			gameOverText.Render(SDL_Rect{ Window::SCREEN_WIDTH / 2 - (1000 / 2), Window::SCREEN_HEIGHT / 2 - (250 / 2), 1000, 250 });
 
 
