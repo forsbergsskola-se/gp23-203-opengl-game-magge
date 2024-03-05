@@ -24,12 +24,12 @@ Pick one..
 
 ## Design Patterns we used
 *  **Object Pooling** (used for enemies, projectiles and bombs)
-*  **Update Method**?
+*  **Update Method** (for rendering all active game objects in sceene)
 
 
 ## STD Classes we used
-*  Using **Vector** for all pools mentioned above. 
-* Others?
+*  Using std::Vector for all pools mentioned above. 
+*  std::String to load paths for .png textures
 
 
 ## Conclusion
