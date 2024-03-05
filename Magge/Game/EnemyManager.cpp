@@ -8,10 +8,12 @@ EnemyManager::EnemyManager(std::vector<GameObject*>* gameObjectList, ProjectileP
 	EnemyManager::shootTimer.Start();
 	EnemyManager::shootDelay = (std::rand() % (EnemyManager::maxShootDelay - EnemyManager::minShootDelay) + EnemyManager::minShootDelay) * 0.01f;
 	EnemyManager::bombs = bombs;
+	EnemyManager::enemyCount = 0;
 
 	for (int y = 0; y < sizeof(EnemyManager::enemyRows) / sizeof(int); y++)
 		for (int i = 0; i < EnemyManager::enemyRows[y]; i++)
 		{
+			EnemyManager::enemyCount++;
 			int spriteIndex = std::rand() % sizeof(EnemyManager::enemySprites) / sizeof(EnemyManager::enemySprites[0]);
 			std::string enemySpritePath = EnemyManager::enemySprites[spriteIndex];
 
@@ -55,6 +57,8 @@ void EnemyManager::Update()
 
 void EnemyManager::OnEnemyDeath()
 {
+	score += 100;
+
 	for (int i = 0; i < enemyCount; i++)
 	{
 		if (!enemies[i]->isActive)
