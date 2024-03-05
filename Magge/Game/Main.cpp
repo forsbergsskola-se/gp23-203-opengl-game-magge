@@ -22,7 +22,8 @@ class GameObject;
 int main( int argc, char* args[] )
 {
 	Window window{};
-	Texture background{"Resources/Space.png"};
+	SDL_Rect* rect = new SDL_Rect{ 0, 0, Window::SCREEN_WIDTH, Window::SCREEN_HEIGHT };
+	Texture background{"Resources/Space.png", *rect};
 
 	//Time
 	Time time{};
@@ -47,7 +48,7 @@ int main( int argc, char* args[] )
 		window.Clear();
 		capTimer.Start();
 
-		background.Render();
+		background.Render(*rect);
 
 		for (GameObject* go : gameObjects)
 		{

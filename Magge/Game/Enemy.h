@@ -29,7 +29,7 @@ class Enemy : public GameObject
 	EnemyManager* enemyManager;
 public:
 
-	Enemy(int xPos, int yPos, ProjectilePool* projectiles, EnemyManager* em) : GameObject{ xPos, yPos, 50, 50 }
+	Enemy(int xPos, int yPos, ProjectilePool* projectiles, EnemyManager* em) : GameObject{ xPos, yPos, 50, 50, "Resources/enemy1.png" }
 	{
 		moveTimer.Start();
 

@@ -23,7 +23,7 @@ public:
 
 	int hp;
 
-	Player(std::vector<GameObject*>* gameObjectList, ProjectilePool* projectiles, ProjectilePool* bombs) : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50 }
+	Player(std::vector<GameObject*>* gameObjectList, ProjectilePool* projectiles, ProjectilePool* bombs) : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50, "Resources/spaceship.png" }
 	{
 		shootCooldown = 0.5f;
 		hp = 3;
