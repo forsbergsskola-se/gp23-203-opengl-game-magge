@@ -22,11 +22,15 @@ public:
 	ProjectilePool* bombs;
 
 	int hp;
+	bool isTakingDamage;
+	Time damageTimer{};
+	float damageDuration;
 
 	Player(std::vector<GameObject*>* gameObjectList, ProjectilePool* projectiles, ProjectilePool* bombs) : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50, "Resources/spaceship.png", false}
 	{
 		shootCooldown = 0.8f;
 		hp = 3;
+		damageDuration = 1.0f;
 		isShooting = false;
 		projectileCount = projectiles->count;
 
@@ -34,6 +38,8 @@ public:
 
 		this->projectiles = projectiles;
 		this->bombs = bombs;
+
+
 	}
 
 
@@ -103,13 +109,20 @@ public:
 
 			if (IsColliding(bomb->collider))
 			{
-				hp--;
 				bomb->isActive = false;
-
-				if(hp <= 0)
-					isActive = false;
+				TakeDamage();
 			}
 		}
+	}
+
+	void TakeDamage()
+	{
+		hp--;
+		isTakingDamage = true;
+		damageTimer.Start();
+
+		if (hp <= 0)
+			isActive = false;
 	}
 
 
