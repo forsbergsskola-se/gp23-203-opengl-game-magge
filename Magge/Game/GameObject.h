@@ -1,9 +1,14 @@
 #pragma once
 #include "Mesh.h"
 #include "Texture.h"
+class Color;
 
 class GameObject
 {
+	Color colors[7]{	Color{0, 255, 255}, Color{255, 255, 0},
+						Color{255, 127, 0}, Color{0, 255, 127},
+						Color{255, 0, 127}, Color{127, 0, 255}, Color{0, 127, 255} };
+
 public:
 	bool isActive;
 
@@ -15,7 +20,7 @@ public:
 	int velX;
 	int velY;
 
-	GameObject(int posX, int posY, int width, int height, std::string path) : mesh{posX, posY, width, height}, texture{ path, mesh.rect.w, mesh.rect.h }
+	GameObject(int posX, int posY, int width, int height, std::string path, bool randomColor) : mesh{posX, posY, width, height}, texture{ path, mesh.rect.w, mesh.rect.h, randomColor? &colors[rand()%7] : new Color(255, 255, 255)}
 	{
 		velX = 0;
 		velY = 0;

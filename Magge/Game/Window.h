@@ -14,8 +14,8 @@ class Window
 
 public:
 	//Screen dimension constants
-	static const int SCREEN_WIDTH = 1280;
-	static const int SCREEN_HEIGHT = 720;
+	static const int SCREEN_WIDTH = 1920;
+	static const int SCREEN_HEIGHT = 1080;
 	//The window we'll be rendering to
 	SDL_Surface* screenSurface = NULL;
 	SDL_Window* window = NULL;

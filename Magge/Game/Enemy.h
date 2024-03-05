@@ -6,6 +6,7 @@
 #include "EnemyManager.h"
 
 class EnemyManager;
+class Color;
 
 class Enemy : public GameObject
 {
@@ -24,17 +25,17 @@ class Enemy : public GameObject
 
 	float moveDelay = 1.0f;
 	Time moveTimer{};
-	const float delayMultiplier = 0.8f;
+	const float delayMultiplier = 0.85f;
 	ProjectilePool* projectiles;
 	EnemyManager* enemyManager;
 public:
 
-	Enemy(int xPos, int yPos, ProjectilePool* projectiles, EnemyManager* em, std::string path) : GameObject{ xPos, yPos, 50, 50, path }
+	Enemy(int xPos, int yPos, ProjectilePool* projectiles, EnemyManager* em, std::string path) : GameObject{ xPos, yPos, 50, 50, path, true}
 	{
 		moveTimer.Start();
 
-		velX = 25;
-		velY = 25;
+		velX = 35;
+		velY = 35;
 		moveDelay = 1.0f;
 
 		this->projectiles = projectiles;

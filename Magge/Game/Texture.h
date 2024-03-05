@@ -3,16 +3,17 @@
 #include "String"
 #include <SDL.h>
 #include "Window.h"
+#include "Color.h"
 
 class Texture
 {
 	SDL_Texture* texture;
-	//SDL_Rect rect;
+	Color* color;
 public:
 
-	Texture(std::string path, int w, int h)
+	Texture(std::string path, int w, int h, Color* c)
 	{
-		//this->rect = rect;
+		color = c;
 
 		//Load image at specified path
 		SDL_Surface* loadedSurface = IMG_Load(path.c_str());
@@ -76,6 +77,7 @@ public:
 	{
 		//Render texture to screen
 		SDL_RenderCopy(Window::renderer, texture, NULL, &currentRect);
+		SDL_SetTextureColorMod(texture, color->r, color->g, color->b);
 	}
 
 };

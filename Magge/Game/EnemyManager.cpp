@@ -15,7 +15,8 @@ EnemyManager::EnemyManager(std::vector<GameObject*>* gameObjectList, ProjectileP
 			int spriteIndex = std::rand() % sizeof(EnemyManager::enemySprites) / sizeof(EnemyManager::enemySprites[0]);
 			std::string enemySpritePath = EnemyManager::enemySprites[spriteIndex];
 
-			auto* enemy = new Enemy{ i * 80 + 100, y * 80 + 30, projectiles, this, enemySpritePath};
+
+			auto* enemy = new Enemy{ i * 100 + 100, y * 100 + 30, projectiles, this, enemySpritePath};
 			gameObjectList->push_back(enemy);
 			EnemyManager::enemies.push_back(enemy);
 		}
@@ -76,6 +77,9 @@ void EnemyManager::CheckWallEvent()
 			{
 				enemy->ReachWallEvent();
 			}
+			EnemyManager::minShootDelay *= EnemyManager::delayMultiplier;
+			EnemyManager::maxShootDelay *= EnemyManager::delayMultiplier;
+
 			break;
 		}
 	}

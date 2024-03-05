@@ -6,8 +6,9 @@
 #include "Projectile.h"
 #include <vector>
 #include "ProjectilePool.h"
-
 #include "Time.h"
+
+class Color;
 
 class Player : public GameObject
 {
@@ -23,9 +24,9 @@ public:
 
 	int hp;
 
-	Player(std::vector<GameObject*>* gameObjectList, ProjectilePool* projectiles, ProjectilePool* bombs) : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50, "Resources/spaceship.png" }
+	Player(std::vector<GameObject*>* gameObjectList, ProjectilePool* projectiles, ProjectilePool* bombs) : GameObject{ Window::SCREEN_WIDTH / 2, Window::SCREEN_HEIGHT - 100, 50, 50, "Resources/spaceship.png", false}
 	{
-		shootCooldown = 0.5f;
+		shootCooldown = 0.8f;
 		hp = 3;
 		isShooting = false;
 		projectileCount = projectiles->count;

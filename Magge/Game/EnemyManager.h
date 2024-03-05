@@ -12,10 +12,12 @@ class ProjectilePool;
 class EnemyManager
 {
 
-	const int minShootDelay = 80;
-	const int maxShootDelay = 160;
+	int minShootDelay = 70;
+	int maxShootDelay = 130;
 
 	float shootDelay;
+	const float delayMultiplier = 0.85f;
+
 	Time shootTimer{};
 
 	void CheckWallEvent();
@@ -28,7 +30,7 @@ public:
 									"Resources/enemy10.png"};
 	//ProjectilePool* projectiles;
 	std::vector<Enemy*> enemies;
-	int enemyRows[4]{ 10, 10, 10, 10 };
+	int enemyRows[5]{ 14, 14, 14, 14, 14};
 	int enemyCount = 40;
 	const int bombCount = 20;
 
