@@ -1,4 +1,7 @@
 # **Magge**
+
+**Watch out for the space kittens!**
+
 By August Lewén and Mandel Cohen
 
 ![](video.gif)
@@ -6,7 +9,7 @@ By August Lewén and Mandel Cohen
 
 ## Project description
 
-Our assignment was to create a simple game using SDL and further develop our skills in C++, Object Oriented Programming and using Design Patterns over a period of 1 - 2 weeks. We chose to re-make the classic arcade game **Space Invaders**, keeping the original look and mechanics, but adding our own twist to it. 
+Our assignment was to create a simple game using SDL and further develop our skills in C++, Object Oriented Programming and using Design Patterns, over a period of 1 week. We chose to re-make the classic arcade game **Space Invaders**, keeping the original look and mechanics, but adding our own twist to it. 
 
 ## Cute features we added
 
