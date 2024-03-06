@@ -30,8 +30,45 @@ Pick one..
 
 ## Design Patterns we used
 *  **Object Pooling** (used for enemies, projectiles and bombs)
-*  **Update Method** (for rendering all active game objects in sceene)
+```
+std::vector<Projectile*> pooledObjects;
 
+ProjectilePool(int count, int speed, std::string path, int w, int h, bool randomColor, std::vector<GameObject*>* gameObjectList)
+{
+   this->count = count;
+   for (int i = 0; i < count; i++)
+   {
+       auto* projectile = new Projectile{ speed, path, w, h, randomColor };
+       projectile->isActive = false;
+       gameObjectList->push_back(projectile);
+       pooledObjects.push_back(projectile);
+   }
+}
+```
+*  **Update Method** (for rendering all active game objects in sceene)
+```
+for (GameObject* go : gameObjects)
+{
+   if(go->isActive)
+    go->Update();
+}
+```
+```
+virtual void Update(){}
+```
+
+```
+virtual void Update() override
+{
+   if (!isActive)
+    return;
+   
+   if (speed < 0 && mesh.rect.y > Window::SCREEN_HEIGHT || speed > 0 && mesh.rect.y < 0)
+    isActive = false;
+   
+   Move(mesh.rect.x, mesh.rect.y - speed);
+}
+```
 
 ## STD Classes we used
 *  Using std::vector for all pools mentioned above. 
