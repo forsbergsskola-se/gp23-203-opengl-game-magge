@@ -38,14 +38,13 @@ int main( int argc, char* args[] )
 
 	//Music & Sound
 	Sound music{"Resources/music.wav", true};
-	music.Play();
+
 	//Background and Text
 	Texture background{ "Resources/Space.png", Window::SCREEN_WIDTH, Window::SCREEN_HEIGHT, new Color{255, 255, 255} };
 	Texture healthIcon{ "Resources/spaceship.png",  40, 40, new Color{255, 255, 255} };
 	Texture gameOverText{ "GAME OVER", new Color{255, 255, 255} };
 	Texture winText{ "YOU WIN!", new Color{255, 255, 255} };
 	Texture restartText{ "Press R To Restart", new Color{255, 255, 255} };
-
 
 	Texture introText{ "Press Space To Play", new Color{255, 255, 255} };
 	Texture creditText{ "Made by August Lewén & Mandel Cohen", new Color{255, 255, 255} };
@@ -56,9 +55,10 @@ int main( int argc, char* args[] )
 	bool gameStarted = false;
 
 
-
 	while (!quit)
 	{
+		music.Play();
+
 		//Game Objects
 		std::vector<GameObject*> gameObjects;
 
@@ -77,7 +77,6 @@ int main( int argc, char* args[] )
 			while (SDL_PollEvent(&e) != 0)
 			{
 				const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-				player.PlayerInput(currentKeyStates);
 
 				//User requests quit
 				if (e.type == SDL_QUIT || currentKeyStates[SDL_SCANCODE_ESCAPE])

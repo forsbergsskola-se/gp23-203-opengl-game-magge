@@ -1,7 +1,6 @@
 #include "EnemyManager.h"
 #include "Enemy.h"
 
-
 EnemyManager::EnemyManager(std::vector<GameObject*>* gameObjectList, ProjectilePool* projectiles, ProjectilePool* bombs)
 {
 	srand(SDL_GetTicks());

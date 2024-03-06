@@ -75,10 +75,7 @@ public:
 		return true;
 	}
 
-	virtual void Update()
-	{
-
-	}
+	virtual void Update(){}
 
 	void Render()
 	{

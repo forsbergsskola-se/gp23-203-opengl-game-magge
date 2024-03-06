@@ -111,7 +111,7 @@ public:
 		{
 			if (!bomb->isActive)
 				continue;
-
+			 
 			if (IsColliding(bomb->collider))
 			{
 				bomb->isActive = false;

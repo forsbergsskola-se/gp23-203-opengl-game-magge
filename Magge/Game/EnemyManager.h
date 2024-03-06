@@ -20,7 +20,6 @@ class EnemyManager
 	Time shootTimer{};
 
 	void CheckWallEvent();
-	bool CheckBottomEvent();
 
 	ProjectilePool* bombs;
 	std::string enemySprites[10]{	"Resources/enemy1.png", "Resources/enemy2.png", "Resources/enemy3.png",
