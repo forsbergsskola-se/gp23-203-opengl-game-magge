@@ -1,9 +1,8 @@
 #pragma once
-#include "Time.h"
 #include <SDL.h>
-#include <cstdlib>
 #include <vector>
-#include "String"
+#include <String>
+#include "Time.h"
 
 class Enemy;
 class GameObject;
@@ -13,34 +12,27 @@ class EnemyManager
 {
 	int minShootDelay = 70;
 	int maxShootDelay = 130;
-
 	float shootDelay;
 	const float delayMultiplier = 0.85f;
 
-	Time shootTimer{};
-
-	void CheckWallEvent();
-
+	const int bombCount = 20;
 	ProjectilePool* bombs;
+	Time shootTimer{};
 	std::string enemySprites[10]{	"Resources/enemy1.png", "Resources/enemy2.png", "Resources/enemy3.png",
 									"Resources/enemy4.png", "Resources/enemy5.png", "Resources/enemy6.png",
-									"Resources/enemy7.png", "Resources/enemy8.png", "Resources/enemy9.png",
-									"Resources/enemy10.png"};
+									"Resources/enemy7.png", "Resources/enemy8.png", "Resources/enemy9.png", "Resources/enemy10.png"};
+	void CheckWallEvent();
+
 public:
-	int score = 0;
 	bool hasReachedBottom;
-	
-	//ProjectilePool* projectiles;
-	std::vector<Enemy*> enemies;
+	int score = 0;
 	int enemyRows[5]{ 14, 14, 14, 14, 14};
 	int enemyCount;
-	const int bombCount = 20;
+	std::vector<Enemy*> enemies;
 
 	EnemyManager(std::vector<GameObject*>* gameObjectList, ProjectilePool* projectilePool, ProjectilePool* bombs);
 	~EnemyManager();
 
 	void Update();
-
 	void OnEnemyDeath();
-
 };

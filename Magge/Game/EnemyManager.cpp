@@ -37,7 +37,6 @@ void EnemyManager::Update()
 		EnemyManager::shootTimer.Start();
 
 
-
 		int index = (std::rand() % EnemyManager::enemyCount);
 
 		//Object Pooling
