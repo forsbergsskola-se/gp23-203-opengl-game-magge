@@ -29,7 +29,9 @@ Pick one..
 
 
 ## Design Patterns we used
-*  **Object Pooling** (used for enemies, projectiles and bombs)
+### **Object Pooling**
+
+Our projectiles are only instantiated at the start of the game and added into two Projectile vectors, one for Player Projectiles, and one for the Enemy bombs.
 ```
 std::vector<Projectile*> pooledObjects;
 
@@ -45,7 +47,23 @@ ProjectilePool(int count, int speed, std::string path, int w, int h, bool random
    }
 }
 ```
-*  **Update Method** (for rendering all active game objects in sceene)
+When shooting projectiles we look for any projectile that is inactive in the pool and place it at the players position and activate it.
+Only gameobjects that are active are rendered on the screen.
+```
+for (Projectile* projectile : projectiles->pooledObjects)
+{
+	if (!projectile->isActive)
+	{
+		projectile->isActive = true;
+		projectile->Move(mesh.rect.x, mesh.rect.y);
+		break;
+	}
+}
+```
+
+### **Update Method** 
+
+All gameobjects run Update function every frame, just like the Update in Unity.
 ```
 for (GameObject* go : gameObjects)
 {
@@ -53,10 +71,12 @@ for (GameObject* go : gameObjects)
     go->Update();
 }
 ```
+
+Gameobject is a parent class that has a virtual void Update, that the children override for their individual behaviour.
 ```
 virtual void Update(){}
 ```
-
+Here is an example of the Projectile class Update
 ```
 virtual void Update() override
 {
