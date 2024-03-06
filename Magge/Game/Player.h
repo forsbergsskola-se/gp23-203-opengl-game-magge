@@ -45,14 +45,11 @@ public:
 
 		shootSound = new Sound{"Resources/pewpew.wav", false};
 		takeDamage = new Sound{ "Resources/damaged.wav", false};
-	
 	}
-
 
 	void PlayerInput(const Uint8* currentKeyStates)
 	{
 		isShooting = currentKeyStates[SDL_SCANCODE_SPACE];
-
 
 		if (currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_RIGHT])
 			velX = 0;
