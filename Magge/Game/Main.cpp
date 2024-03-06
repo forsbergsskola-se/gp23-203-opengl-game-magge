@@ -37,8 +37,8 @@ int main( int argc, char* args[] )
 	int countedFrames = 0;
 
 	//Music & Sound
-	//Sound music{"Resources/music.wav", true};
-
+	Sound music{"Resources/music.wav", true};
+	music.Play();
 	//Background and Text
 	Texture background{ "Resources/Space.png", Window::SCREEN_WIDTH, Window::SCREEN_HEIGHT, new Color{255, 255, 255} };
 	Texture healthIcon{ "Resources/spaceship.png",  40, 40, new Color{255, 255, 255} };
@@ -48,10 +48,14 @@ int main( int argc, char* args[] )
 
 
 	Texture introText{ "Press Space To Play", new Color{255, 255, 255} };
+	Texture creditText{ "Made by August Lewén & Mandel Cohen", new Color{255, 255, 255} };
+
 
 	bool quit = false;
 	bool restart = false;
 	bool gameStarted = false;
+
+
 
 	while (!quit)
 	{
@@ -69,7 +73,7 @@ int main( int argc, char* args[] )
 		{ 
 			window.Clear();
 			introText.Render(SDL_Rect{ Window::SCREEN_WIDTH / 2 - (1000 / 2), Window::SCREEN_HEIGHT / 2 - (100 / 2), 1000, 100 });
-
+			creditText.Render(SDL_Rect{ Window::SCREEN_WIDTH / 2 - (800 / 2), Window::SCREEN_HEIGHT / 2 - (50 / 2) + 300, 800, 50});
 			while (SDL_PollEvent(&e) != 0)
 			{
 				const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);

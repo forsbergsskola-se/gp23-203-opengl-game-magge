@@ -4,6 +4,7 @@
 #include "Projectile.h"
 #include "ProjectilePool.h"
 #include "EnemyManager.h"
+#include "Sound.h"
 
 class EnemyManager;
 class Color;
@@ -28,6 +29,7 @@ class Enemy : public GameObject
 	const float delayMultiplier = 0.8f;
 	ProjectilePool* projectiles;
 	EnemyManager* enemyManager;
+	Sound* deathSound;
 public:
 
 	Enemy(int xPos, int yPos, ProjectilePool* projectiles, EnemyManager* em, std::string path) : GameObject{ xPos, yPos, 50, 50, path, true}
@@ -40,7 +42,7 @@ public:
 
 		this->projectiles = projectiles;
 		enemyManager = em;
-
+		deathSound = new Sound{"Resources/kill.wav", false};
 	}
 
 
@@ -57,12 +59,17 @@ public:
 			if (IsColliding(projectile->collider))
 			{
 				projectile->isActive = false;
-				isActive = false;
-				enemyManager->OnEnemyDeath();
+				Death();
 			}
 		}
 	}
 
+	void Death()
+	{
+		deathSound->Play();
+		isActive = false;
+		enemyManager->OnEnemyDeath();
+	}
 	
 
 	bool IsNearWall() const

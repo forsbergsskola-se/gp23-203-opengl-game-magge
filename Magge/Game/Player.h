@@ -10,7 +10,6 @@
 #include "Sound.h"
 
 class Color;
-class Sound;
 
 class Player : public GameObject
 {
@@ -19,6 +18,7 @@ class Player : public GameObject
 	int projectileCount;
 	bool isShooting;
 	Sound* shootSound;
+	Sound* takeDamage;
 
 public:
 	ProjectilePool* projectiles;
@@ -44,6 +44,8 @@ public:
 		this->bombs = bombs;
 
 		shootSound = new Sound{"Resources/pewpew.wav", false};
+		takeDamage = new Sound{ "Resources/damaged.wav", false};
+	
 	}
 
 
@@ -123,6 +125,7 @@ public:
 
 	void TakeDamage()
 	{
+		takeDamage->Play();
 		hp--;
 		isTakingDamage = true;
 		damageTimer.Start();
