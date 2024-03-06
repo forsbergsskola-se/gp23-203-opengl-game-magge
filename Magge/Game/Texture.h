@@ -64,13 +64,7 @@ public:
 			{
 				printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
 			}
-			else
-			{
-				////Get image dimensions
-				//mWidth = textSurface->w;
-				//mHeight = textSurface->h;
-			}
-
+			
 			//Get rid of old surface
 			SDL_FreeSurface(textSurface);
 		}
