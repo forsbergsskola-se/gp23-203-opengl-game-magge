@@ -2,7 +2,7 @@
 By August Lewén and Mandel Cohen
 
 ![githubimage](https://github.com/forsbergsskola-se/gp23-203-opengl-game-magge/assets/70960870/ed09e5f9-3a20-4a70-afc3-1b3788d069ab)
-[[Uploading Space Invaders.html…]()](https://i.gyazo.com/b4899f831030570097cccc61a8897bdd.gif)
+[ Alt text](video. gif) / ! [](video. gif)
 
 ## Project description
 Our assignment was to create a simple game using SDL and further develop our skills in C++, Object Oriented Programming and using Design Patterns over a period of 1 - 2 weeks. We chose to re-make the classic arcade game **Space Invaders**, keeping the original look and mechanics, but adding our own twist to it. 
