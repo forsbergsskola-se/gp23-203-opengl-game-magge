@@ -1,4 +1,7 @@
 # **Magge**
+
+**Watch out for the space kittens!**
+
 By August Lewén and Mandel Cohen
 
 ![](video.gif)
@@ -6,7 +9,7 @@ By August Lewén and Mandel Cohen
 
 ## Project description
 
-Our assignment was to create a simple game using SDL and further develop our skills in C++, Object Oriented Programming and using Design Patterns over a period of 1 - 2 weeks. We chose to re-make the classic arcade game **Space Invaders**, keeping the original look and mechanics, but adding our own twist to it. 
+Our assignment was to create a simple game using SDL and further develop our skills in C++, Object Oriented Programming and using Design Patterns, over a period of 1 week. We chose to re-make the classic arcade game **Space Invaders**, keeping the original look and mechanics, but adding our own twist to it. 
 
 ## Cute features we added
 
@@ -26,12 +29,65 @@ Our assignment was to create a simple game using SDL and further develop our ski
 
 ## One Class we’re particularly happy about
 
-
+This is EnemyManager.h. Here we forward declare a few classes which are only used as pointers and we declare all class function. 
 ```
-//here is our amazing class
+#pragma once
+#include <SDL.h>
+#include <vector>
+#include <String>
+#include "Time.h"
+
+class Enemy;
+class GameObject;
+class ProjectilePool;
+
+class EnemyManager
+{
+	int minShootDelay = 70;
+	int maxShootDelay = 130;
+	float shootDelay;
+	const float delayMultiplier = 0.85f;
+
+	const int bombCount = 20;
+	ProjectilePool* bombs;
+	Time shootTimer{};
+	std::string enemySprites[10]{	"Resources/enemy1.png", "Resources/enemy2.png", "Resources/enemy3.png",
+					"Resources/enemy4.png", "Resources/enemy5.png", "Resources/enemy6.png",
+					"Resources/enemy7.png", "Resources/enemy8.png", "Resources/enemy9.png", "Resources/enemy10.png"};
+	void CheckWallEvent();
+
+public:
+	bool hasReachedBottom;
+	int score = 0;
+	int enemyRows[5]{ 14, 14, 14, 14, 14};
+	int enemyCount;
+	std::vector<Enemy*> enemies;
+
+	EnemyManager(std::vector<GameObject*>* gameObjectList, ProjectilePool* projectilePool, ProjectilePool* bombs);
+	~EnemyManager();
+
+	void Update();
+	void OnEnemyDeath();
+};
 ```
-
-
+and in the cpp they are defined. For example here is the OnEnemyDeath function in the cpp.
+```
+void EnemyManager::OnEnemyDeath()
+{
+	score += 100;
+	
+	for (int i = 0; i < enemyCount; i++)
+	{
+		if (!enemies[i]->isActive)
+		{
+			enemies.erase(enemies.begin() + i);
+			enemyCount--;
+	
+			return;
+		}
+	}
+}
+```
 ## Design Patterns we used
 ### **Object Pooling**
 
@@ -106,8 +162,13 @@ Since the order of the gameobjects in this big vector of gameobjects doesn't rea
 
 ### std::rand
 
-We used a lot of ```rand()``` in our project. We randomize colors on our Projectiles and Enemies, as well as giving the Enemies a random texture when created. We also spawn Bombs from random Enemies, at random intervalls.
+We used a lot of ```rand()``` in our project. We randomize colors on our Projectiles and Enemies, as well as giving the Enemies a random texture when created. We also spawn Bombs from random Enemies, at random intervalls. 
+
+In our Enemy Manager we initailise a seed from time ```srand(SDL_GetTicks());```.
 
 We also use ```std::string``` and ```std::array```. 
 
-## Additinal Screenshots
+## Additional Screenshots
+![githubimage](https://github.com/forsbergsskola-se/gp23-203-opengl-game-magge/assets/70960870/7ab8d522-51dd-4fca-834d-a80171b45ff0)
+![winScreen](https://github.com/forsbergsskola-se/gp23-203-opengl-game-magge/assets/70960870/05a3d362-6fc9-4472-8a59-e1e2d2a7a1eb)
+
