@@ -106,7 +106,9 @@ Since the order of the gameobjects in this big vector of gameobjects doesn't rea
 
 ### std::rand
 
-We used a lot of ```rand()``` in our project. We randomize colors on our Projectiles and Enemies, as well as giving the Enemies a random texture when created. We also spawn Bombs from random Enemies, at random intervalls.
+We used a lot of ```rand()``` in our project. We randomize colors on our Projectiles and Enemies, as well as giving the Enemies a random texture when created. We also spawn Bombs from random Enemies, at random intervalls. 
+
+In our Enemy Manager we initailise a seed from time ```srand(SDL_GetTicks());```.
 
 We also use ```std::string``` and ```std::array```. 
 
