@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Texture.h"
+#include "Sound.h"
 
 //Event handler
 SDL_Event e;
@@ -25,14 +26,18 @@ int main( int argc, char* args[] )
 	Window window{};
 	SDL_Rect* rect = new SDL_Rect{ 0, 0, Window::SCREEN_WIDTH, Window::SCREEN_HEIGHT };
 	
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 	
+
 	//Time
 	Time time{};
 	Time capTimer{};
 	time.Start();
 	int countedFrames = 0;
 
-	
+	//Music & Sound
+	//Sound music{"Resources/music.wav", true};
 
 	//Background and Text
 	Texture background{ "Resources/Space.png", Window::SCREEN_WIDTH, Window::SCREEN_HEIGHT, new Color{255, 255, 255} };

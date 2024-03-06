@@ -7,8 +7,10 @@
 #include <vector>
 #include "ProjectilePool.h"
 #include "Time.h"
+#include "Sound.h"
 
 class Color;
+class Sound;
 
 class Player : public GameObject
 {
@@ -16,6 +18,7 @@ class Player : public GameObject
 	Time shootTimer{};
 	int projectileCount;
 	bool isShooting;
+	Sound* shootSound;
 
 public:
 	ProjectilePool* projectiles;
@@ -33,13 +36,14 @@ public:
 		damageDuration = 1.0f;
 		isShooting = false;
 		projectileCount = projectiles->count;
+		isTakingDamage = false;
 
 		gameObjectList->push_back(this);
 
 		this->projectiles = projectiles;
 		this->bombs = bombs;
 
-
+		shootSound = new Sound{"Resources/pewpew.wav", false};
 	}
 
 
@@ -63,6 +67,8 @@ public:
 	{
 		shootTimer.Stop();
 		shootTimer.Start();
+
+		shootSound->Play();
 
 		//Object Pooling
 		for (Projectile* projectile : projectiles->pooledObjects)
