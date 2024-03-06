@@ -166,3 +166,5 @@ In our Enemy Manager we initailise a seed from time ```srand(SDL_GetTicks());```
 We also use ```std::string``` and ```std::array```. 
 
 ## Additinal Screenshots
+![githubimage](https://github.com/forsbergsskola-se/gp23-203-opengl-game-magge/assets/70960870/7ab8d522-51dd-4fca-834d-a80171b45ff0)
+
