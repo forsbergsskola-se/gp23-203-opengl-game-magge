@@ -29,7 +29,7 @@ Our assignment was to create a simple game using SDL and further develop our ski
 
 ## One Class we’re particularly happy about
 
-This is EnemyManager.h. Here we forward declare a few classes which are only used as pointers and we declare all class function. 
+This is EnemyManager.h. Here we forward declare a few classes which are only used as pointers and we declare all class functions. 
 ```
 #pragma once
 #include <SDL.h>
@@ -70,7 +70,7 @@ public:
 	void OnEnemyDeath();
 };
 ```
-and in the cpp they are defined. For example here is the OnEnemyDeath function in the cpp.
+and in the .cpp they are defined. For example here is the OnEnemyDeath function in the cpp.
 ```
 void EnemyManager::OnEnemyDeath()
 {
