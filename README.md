@@ -30,7 +30,7 @@ Our assignment was to create a simple game using SDL and further develop our ski
 ## One Class we’re particularly happy about
 
 This is EnemyManager.h. Here we forward declare a few classes which are only used as pointers and we declare all class functions. 
-```
+```c++
 #pragma once
 #include <SDL.h>
 #include <vector>
@@ -71,7 +71,7 @@ public:
 };
 ```
 and in the .cpp they are defined. For example here is the OnEnemyDeath function in the cpp.
-```
+```c++
 void EnemyManager::OnEnemyDeath()
 {
 	score += 100;
@@ -92,7 +92,7 @@ void EnemyManager::OnEnemyDeath()
 ### **Object Pooling**
 
 Our projectiles are only instantiated at the start of the game and added into two Projectile vectors, one for Player Projectiles, and one for the Enemy bombs.
-```
+```c++
 std::vector<Projectile*> pooledObjects;
 
 ProjectilePool(int count, int speed, std::string path, int w, int h, bool randomColor, std::vector<GameObject*>* gameObjectList)
@@ -109,7 +109,7 @@ ProjectilePool(int count, int speed, std::string path, int w, int h, bool random
 ```
 When shooting projectiles we look for any projectile that is inactive in the pool and place it at the players position and activate it.
 Only gameobjects that are active are rendered on the screen.
-```
+```c++
 for (Projectile* projectile : projectiles->pooledObjects)
 {
 	if (!projectile->isActive)
@@ -124,7 +124,7 @@ for (Projectile* projectile : projectiles->pooledObjects)
 ### **Update Method** 
 
 All gameobjects run Update function every frame, just like the Update in Unity.
-```
+```c++
 for (GameObject* go : gameObjects)
 {
    if(go->isActive)
@@ -133,11 +133,11 @@ for (GameObject* go : gameObjects)
 ```
 
 Gameobject is a parent class that has a virtual void Update, that the children override for their individual behaviour.
-```
+```c++
 virtual void Update(){}
 ```
 Here is an example of the Projectile class Update:
-```
+```c++
 virtual void Update() override
 {
    if (!isActive)
